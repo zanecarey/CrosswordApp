@@ -11,7 +11,7 @@ class RestApi {
 
     init {
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://www.thecocktaildb.com")
+            .baseUrl("https://raw.githubusercontent.com")
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
@@ -19,13 +19,13 @@ class RestApi {
         puzzleApi = retrofit.create(PuzzleInterface::class.java)
     }
 
-//    fun getPuzzle(format: String): Deferred<Results> {
-//        //return puzzleApi.getPuzzle(format)
-//        return puzzleApi.getData(format)
-//    }
-
     fun getPuzzle(): Deferred<Results> {
         //return puzzleApi.getPuzzle(format)
         return puzzleApi.getData()
     }
+
+//    fun getPuzzle(): Deferred<Results> {
+//        //return puzzleApi.getPuzzle(format)
+//        return puzzleApi.getData()
+//    }
 }

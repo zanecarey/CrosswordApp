@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
             val request = api.getPuzzle().await()
 
             withContext(Dispatchers.Main) {
-                tv.text = request.drinks?.get(0)?.strDrink
+                tv.text = request.author
             }
         }
     }

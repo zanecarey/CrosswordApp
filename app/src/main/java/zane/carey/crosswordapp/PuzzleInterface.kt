@@ -13,21 +13,40 @@ interface PuzzleInterface {
 //    @GET("Data.aspx?date=9/11/2008")
 //    fun getPuzzle(@Query("format") format : String): Deferred<Results>
 
-
-    @GET("/api/json/v1/1/random.php")
+    @Headers("Content-Type: application/json")
+    @GET("doshea/nyt_crosswords/master/1999/01/01.json")
     fun getData(): Deferred<Results>
 }
 
-//data class Results(
-//    @SerializedName("author")
-//    val author: String
-//)
-
 data class Results(
-    @SerializedName("drinks")
-    val drinks: List<Drinks>?
+    @SerializedName("author")
+    val author: String
+//    @SerializedName("answers")
+//    val answers: List<Answers>
 )
 
-data class Drinks(
-    @SerializedName("strDrink")
-    val strDrink: String)
+//data class Answers(
+//    @SerializedName("across")
+//    val across: List<Across>,
+//    @SerializedName("down")
+//    val down: List<Down>
+//)
+//
+//data class Across(
+//    @SerializedName("across")
+//    val across: List<String>
+//)
+//
+//data class Down(
+//    @SerializedName("Down")
+//    val down: List<String>
+//)
+
+//data class Results(
+//    @SerializedName("drinks")
+//    val drinks: List<Drinks>?
+//)
+//
+//data class Drinks(
+//    @SerializedName("strDrink")
+//    val strDrink: String)
