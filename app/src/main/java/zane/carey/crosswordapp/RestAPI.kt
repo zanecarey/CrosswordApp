@@ -19,9 +19,9 @@ class RestApi {
         puzzleApi = retrofit.create(PuzzleInterface::class.java)
     }
 
-    fun getPuzzle(): Deferred<Results> {
+    fun getPuzzle(year: String, month: String, day: String): Deferred<Results> {
         //return puzzleApi.getPuzzle(format)
-        return puzzleApi.getData()
+        return puzzleApi.getData(year,month,day)
     }
 
 //    fun getPuzzle(): Deferred<Results> {
