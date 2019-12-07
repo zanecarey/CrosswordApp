@@ -58,11 +58,3 @@ data class Clues(
     val down: List<String>
 )
 
-//data class Results(
-//    @SerializedName("drinks")
-//    val drinks: List<Drinks>?
-//)
-//
-//data class Drinks(
-//    @SerializedName("strDrink")
-//    val strDrink: String)

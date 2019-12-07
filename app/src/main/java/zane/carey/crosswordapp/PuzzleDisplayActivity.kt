@@ -14,7 +14,12 @@ var day = ""
 
 private lateinit var authorTV : TextView
 private lateinit var editorTV : TextView
+private lateinit var dateTV : TextView
+private lateinit var cluesTV : TextView
 
+//game grid variables
+var rows = 0
+var cols = 0
 class PuzzleDisplayActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +28,8 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
         authorTV = findViewById(R.id.authorTextView)
         editorTV = findViewById(R.id.editorTextView)
+        dateTV = findViewById(R.id.dateTextView)
+        cluesTV = findViewById(R.id.cluesTextView)
 
         getDate()
 
@@ -45,9 +52,15 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         val job = CoroutineScope(Dispatchers.Main).launch {
             val request = api.getPuzzle(year,month,day).await()
 
+            rows = request.size.rows
+            cols = request.size.cols
+
+            //update ui info
             withContext(Dispatchers.Main) {
                 authorTV.text = request.author
                 editorTV.text = request.editor
+                dateTV.text = request.date
+                cluesTV.text = request.clues.across[0]
             }
         }
     }
