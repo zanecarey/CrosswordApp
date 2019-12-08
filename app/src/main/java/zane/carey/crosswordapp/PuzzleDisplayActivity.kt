@@ -2,6 +2,7 @@ package zane.carey.crosswordapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.GridView
 import android.widget.TextView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,10 +17,17 @@ private lateinit var authorTV : TextView
 private lateinit var editorTV : TextView
 private lateinit var dateTV : TextView
 private lateinit var cluesTV : TextView
+private lateinit var cellGridView : GridView
 
 //game grid variables
 var rows = 0
 var cols = 0
+
+//arrays for our grid
+private var gridnums: List<Int> = listOf(0)
+private var grid: List<String> = listOf("")
+private var cellList: MutableList<Cell> = mutableListOf<Cell>()
+
 class PuzzleDisplayActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +38,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         editorTV = findViewById(R.id.editorTextView)
         dateTV = findViewById(R.id.dateTextView)
         cluesTV = findViewById(R.id.cluesTextView)
+        cellGridView = findViewById(R.id.crosswordGridView)
 
         getDate()
 
@@ -54,6 +63,18 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
             rows = request.size.rows
             cols = request.size.cols
+
+            cellGridView.numColumns = cols
+
+            gridnums = request.gridnums
+            grid = request.grid
+
+            for(i in 0..grid.size-1){
+                cellList.add(Cell(grid[i], gridnums[i]))
+            }
+            val adapter = CellAdapter(cellList)
+
+            cellGridView.adapter = adapter
 
             //update ui info
             withContext(Dispatchers.Main) {

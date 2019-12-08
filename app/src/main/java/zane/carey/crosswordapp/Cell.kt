@@ -1,10 +1,10 @@
 package zane.carey.crosswordapp
 
-public class Cell{
-    var letter: Char? = null
+class Cell{
+    var letter: String? = null
     var number: Int? = null
 
-    constructor(letter: Char, number: Int){
+    constructor(letter: String, number: Int){
         this.letter = letter
         this.number = number
     }
