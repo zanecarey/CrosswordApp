@@ -69,7 +69,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             gridnums = request.gridnums
             grid = request.grid
 
-            for(i in 0..grid.size-1){
+            for(i in 0 until grid.size-1){
                 cellList.add(Cell(grid[i], gridnums[i]))
             }
             val adapter = CellAdapter(cellList)
