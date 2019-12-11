@@ -2,6 +2,7 @@ package zane.carey.crosswordapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.KeyEvent
 import android.widget.GridView
 import android.widget.TextView
 import kotlinx.coroutines.CoroutineScope
@@ -13,11 +14,7 @@ var year = ""
 var month = ""
 var day = ""
 
-private lateinit var authorTV : TextView
-private lateinit var editorTV : TextView
-private lateinit var dateTV : TextView
-private lateinit var cluesTV : TextView
-private lateinit var cellGridView : GridView
+private lateinit var cellGridView: GridView
 
 //game grid variables
 var rows = 0
@@ -34,10 +31,6 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_puzzle_display)
 
-        authorTV = findViewById(R.id.authorTextView)
-        editorTV = findViewById(R.id.editorTextView)
-        dateTV = findViewById(R.id.dateTextView)
-        cluesTV = findViewById(R.id.cluesTextView)
         cellGridView = findViewById(R.id.crosswordGridView)
 
         getDate()
@@ -45,7 +38,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         getPuzzleData(year, month, day)
     }
 
-    private fun getDate(){
+    private fun getDate() {
         if (getIntent().hasExtra("year")) {
             year = getIntent().getStringExtra("year")
         }
@@ -57,9 +50,9 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         }
     }
 
-    private fun getPuzzleData(year:String,month:String,day:String){
+    private fun getPuzzleData(year: String, month: String, day: String) {
         val job = CoroutineScope(Dispatchers.Main).launch {
-            val request = api.getPuzzle(year,month,day).await()
+            val request = api.getPuzzle(year, month, day).await()
 
             rows = request.size.rows
             cols = request.size.cols
@@ -69,7 +62,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             gridnums = request.gridnums
             grid = request.grid
 
-            for(i in 0 until grid.size-1){
+            for (i in 0 until grid.size - 1) {
                 cellList.add(Cell(grid[i], gridnums[i]))
             }
             val adapter = CellAdapter(cellList)
@@ -78,11 +71,26 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
             //update ui info
             withContext(Dispatchers.Main) {
-                authorTV.text = request.author
-                editorTV.text = request.editor
-                dateTV.text = request.date
-                cluesTV.text = request.clues.across[0]
+                //                authorTV.text = request.author
+//                editorTV.text = request.editor
+//                dateTV.text = request.date
+//                cluesTV.text = request.clues.across[0]
             }
         }
     }
+
+    //detect when letter is pushed, change current cell
+//    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+//        return when (keyCode) {
+//            KeyEvent.KEYCODE_A -> {
+//                //current cell letter updated
+//                if(event.isShiftPressed){
+//                    return true
+//                } else {
+//                    return false
+//                }
+//                true
+//            }
+//        } else -> super.onKeyUp(keyCode, event)
+//    }
 }
