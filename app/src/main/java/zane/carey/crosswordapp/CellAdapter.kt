@@ -16,6 +16,7 @@ class CellAdapter(val list: List<Cell>) : BaseAdapter() {
 
     private val myList = list
 
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         // Inflate the custom view
         val inflater =
@@ -25,7 +26,7 @@ class CellAdapter(val list: List<Cell>) : BaseAdapter() {
         // Get the custom view widgets reference
         val num = view.findViewById<TextView>(R.id.cellNumber)
         val letter = view.findViewById<TextView>(R.id.cellLetter)
-        val layout = view.findViewById<LinearLayout>(R.id.cellLayout)
+        val cellLayout = view.findViewById<LinearLayout>(R.id.cellLayout)
 
         if(myList[position].number != 0){
             num.text = myList[position].number.toString()
@@ -35,18 +36,21 @@ class CellAdapter(val list: List<Cell>) : BaseAdapter() {
 
         //check if character is ".", if it is then make cell blank and unclickable
         if(myList[position].letter == "."){
-            layout.setBackgroundColor(Color.BLACK)
-            layout.isClickable = false
+            cellLayout.setBackgroundColor(Color.BLACK)
+            cellLayout.isClickable = false
         } else {
             letter.text = myList[position].letter.toString()
         }
 
-        //onclick for inputting a letter
-        layout.setOnClickListener{
-
-            //highlight the chosen cell with red border
-            layout.setBackgroundResource(R.drawable.red_border)
-        }
+//        //onclick for inputting a letter
+//        layout.setOnClickListener{
+//
+//            //highlight the chosen cell with red border
+//            layout.setBackgroundResource(R.drawable.red_border)
+//
+//            //change current highlighted position
+//
+//        }
 
         return view
     }
