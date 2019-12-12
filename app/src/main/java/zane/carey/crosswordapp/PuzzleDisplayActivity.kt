@@ -3,8 +3,10 @@ package zane.carey.crosswordapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.View
 import android.widget.GridView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,6 +17,7 @@ var month = ""
 var day = ""
 
 private lateinit var cellGridView: GridView
+private lateinit var displayLayout: ConstraintLayout
 
 //game grid variables
 var rows = 0
@@ -25,6 +28,7 @@ private var gridnums: List<Int> = listOf(0)
 private var grid: List<String> = listOf("")
 private var cellList: MutableList<Cell> = mutableListOf<Cell>()
 
+
 class PuzzleDisplayActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +36,9 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         setContentView(R.layout.activity_puzzle_display)
 
         cellGridView = findViewById(R.id.crosswordGridView)
+
+        //displayLayout = findViewById(R.id.display_layout)
+
 
         getDate()
 

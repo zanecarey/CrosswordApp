@@ -2,6 +2,7 @@ package zane.carey.crosswordapp
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +45,7 @@ class CellAdapter(val list: List<Cell>) : BaseAdapter() {
         layout.setOnClickListener{
 
             //highlight the chosen cell with red border
+            layout.setBackgroundResource(R.drawable.red_border)
         }
 
         return view

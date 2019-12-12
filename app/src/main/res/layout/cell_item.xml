@@ -1,31 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="30dp"
-    android:layout_height="30dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/cellLayout"
+    android:layout_width="20dp"
+    android:layout_height="20dp"
     android:layout_margin="2dp"
-    android:background="@drawable/border">
+    android:background="@drawable/border"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/cellNumber"
-        android:text="1"
-        android:textColor="#000"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
+        android:text="1"
+        android:textColor="#000"
         android:textSize="8sp" />
 
     <TextView
         android:id="@+id/cellLetter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="A"
-        android:visibility="invisible"
-        android:textColor="#000"
-        android:textSize="18sp"
         android:layout_gravity="center"
         android:layout_marginBottom="4dp"
-        />
+        android:text="A"
+        android:textColor="#000"
+        android:textSize="18sp"
+        android:visibility="invisible" />
 </LinearLayout>
