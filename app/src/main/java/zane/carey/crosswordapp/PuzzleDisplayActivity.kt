@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.GridView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.get
 import androidx.core.view.size
@@ -26,6 +27,9 @@ private lateinit var displayLayout: ConstraintLayout
 //game grid variables
 var rows = 0
 var cols = 0
+
+//game info
+var date = ""
 
 //current highlighted position value
 var highlightedPos = 0
@@ -47,8 +51,18 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         //displayLayout = findViewById(R.id.display_layout)
 
         cellGridView.setOnItemClickListener {parent, view, position, id ->
-            cellGridView[position].cellLayout.setBackgroundResource(R.drawable.green_border)
-            highlightedPos = position
+            //check if cell is a blank cell
+            if(grid[position] != ".") {
+
+                //remove highlight from former cell
+                cellGridView[highlightedPos].cellLayout.setBackgroundResource(R.drawable.border)
+
+                //add highlight to chosen cell
+                cellGridView[position].cellLayout.setBackgroundResource(R.drawable.green_border)
+
+                //change highlighted position
+                highlightedPos = position
+            }
         }
         getDate()
 
@@ -73,6 +87,8 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
             rows = request.size.rows
             cols = request.size.cols
+
+            date = request.date
 
             cellGridView.numColumns = cols
 
@@ -110,6 +126,10 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         return when (keyCode) {
             KeyEvent.KEYCODE_ENTER -> {
                 checkAnswer()
+                true
+            }
+            KeyEvent.KEYCODE_SHIFT_LEFT -> {
+                Toast.makeText(this, date, Toast.LENGTH_SHORT).show()
                 true
             }
             KeyEvent.KEYCODE_A -> {
