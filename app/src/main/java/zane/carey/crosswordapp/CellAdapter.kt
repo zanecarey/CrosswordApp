@@ -38,6 +38,7 @@ class CellAdapter(val list: List<Cell>) : BaseAdapter() {
         if(myList[position].letter == "."){
             cellLayout.setBackgroundColor(Color.BLACK)
             cellLayout.isClickable = false
+            letter.text = myList[position].letter
         } else {
             letter.text = myList[position].letter.toString()
         }
