@@ -3,6 +3,8 @@ package zane.carey.crosswordapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.GridView
@@ -243,10 +245,6 @@ class PuzzleDisplayActivity : AppCompatActivity() {
     //detect when letter is pushed, change current cell
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         return when (keyCode) {
-            KeyEvent.KEYCODE_ENTER -> {
-                checkAnswer()
-                true
-            }
             KeyEvent.KEYCODE_SHIFT_LEFT -> {
                 Toast.makeText(this, date, Toast.LENGTH_SHORT).show()
                 true
@@ -409,5 +407,24 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             }
             else -> super.onKeyUp(keyCode, event)
         }
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        // Inflate the menu to use in the action bar
+        val inflater = menuInflater
+        inflater.inflate(R.menu.toolbar_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle presses on the action bar menu items
+        when (item.itemId) {
+            R.id.action_error_check -> {
+                checkAnswer()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
