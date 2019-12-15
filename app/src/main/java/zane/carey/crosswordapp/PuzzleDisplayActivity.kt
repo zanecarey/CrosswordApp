@@ -23,6 +23,7 @@ var day = ""
 
 private lateinit var cellGridView: GridView
 private lateinit var displayLayout: ConstraintLayout
+private lateinit var clueTextView: TextView
 
 //game grid variables
 var rows = 0
@@ -30,9 +31,10 @@ var cols = 0
 
 //game info
 var date = ""
-
+var clues: MutableList<String> = mutableListOf<String>()
 //current highlighted position value
 var highlightedPos = 0
+var highlightedRow: MutableList<Int> = mutableListOf<Int>()
 
 //arrays for our grid
 private var gridnums: List<Int> = listOf(0)
@@ -48,15 +50,34 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
         cellGridView = findViewById(R.id.crosswordGridView)
 
+        clueTextView = findViewById(R.id.clue_TextView)
         //displayLayout = findViewById(R.id.display_layout)
 
         cellGridView.setOnItemClickListener {parent, view, position, id ->
+
+            //change clue to display to player
+
+            //get correct clue number
+            var clueNum = 0
+            for(i in 0 until position){
+                if(cellGridView[i].cellLetter.text == "."){
+                    clueNum++
+                }
+            }
+
+            clueTextView.text = clues[clueNum]
+
+
             //check if cell is a blank cell
             if(grid[position] != ".") {
 
                 //remove highlight from former cells
                 cellGridView[highlightedPos].cellLayout.setBackgroundResource(R.drawable.border)
 
+                for(i in 0 until highlightedRow.size){
+                    cellGridView[highlightedRow[i]].cellLayout.setBackgroundResource(R.drawable.border)
+
+                }
                 //add highlight to chosen cell
                 cellGridView[position].cellLayout.setBackgroundResource(R.drawable.green_border)
 
@@ -135,13 +156,18 @@ class PuzzleDisplayActivity : AppCompatActivity() {
                         rowMultiplierRight = 15
                         rowMultiplierLeft = 14
                     }
+                    in cellGridView.numColumns*15..(cellGridView.numColumns * 16 - 1) ->
+                    {
+                        rowMultiplierRight = 16
+                        rowMultiplierLeft = 15
+                    }
                 }
 
-                for(i in position - 1 until 0){
-                    cellGridView[i].setBackgroundResource(R.drawable.blue_border)
-//                    if(cellGridView[i].cellLetter.text != "."){
-//                        cellGridView[i].setBackgroundResource(R.drawable.blue_border)
-//                    } else { break }
+                for(i in (position - 1) downTo cellGridView.numColumns * rowMultiplierLeft){
+                    if(cellGridView[i].cellLetter.text != "."){
+                        cellGridView[i].setBackgroundResource(R.drawable.blue_border)
+                        highlightedRow.add(i)
+                    } else { break }
                 }
 
                 for(i in position + 1 until cellGridView.numColumns * rowMultiplierRight){
@@ -149,9 +175,9 @@ class PuzzleDisplayActivity : AppCompatActivity() {
                     if(cellGridView[i].cellLetter.text != "."){
                         cellGridView[i].setBackgroundResource(R.drawable.blue_border)
 
+                        highlightedRow.add(i)
                     } else {break}
                 }
-
 
                 //change highlighted position
                 highlightedPos = position
@@ -183,6 +209,8 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
             date = request.date
 
+            clues = request.clues.across.toMutableList()
+
             cellGridView.numColumns = cols
 
             gridnums = request.gridnums
@@ -197,10 +225,8 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
             //update ui info
             withContext(Dispatchers.Main) {
-                //                authorTV.text = request.author
-//                editorTV.text = request.editor
-//                dateTV.text = request.date
-//                cluesTV.text = request.clues.across[0]
+
+                clueTextView.text = request.clues.across[0]
             }
         }
     }

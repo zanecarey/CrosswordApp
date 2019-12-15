@@ -42,17 +42,6 @@ class CellAdapter(val list: List<Cell>) : BaseAdapter() {
         } else {
             letter.text = myList[position].letter.toString()
         }
-
-//        //onclick for inputting a letter
-//        layout.setOnClickListener{
-//
-//            //highlight the chosen cell with red border
-//            layout.setBackgroundResource(R.drawable.red_border)
-//
-//            //change current highlighted position
-//
-//        }
-
         return view
     }
 
