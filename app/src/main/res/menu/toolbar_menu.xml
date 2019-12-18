@@ -4,9 +4,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
     <item
+        android:id="@+id/action_change_direction"
+        android:title="Change"
+        app:showAsAction="ifRoom|withText"
+        android:icon="@drawable/ic_swap_vert_black_48dp"
+        />
+    <item
         android:id="@+id/action_error_check"
         android:title="Check"
         app:showAsAction="ifRoom|withText"
-        android:icon="@drawable/ic_check_box_white_24dp"
+        android:icon="@drawable/ic_check_box_black_48dp"
+        />
+
+    <item
+        android:id="@+id/action_display_info"
+        android:title="Info"
+        app:showAsAction="ifRoom|withText"
+        android:icon="@drawable/ic_info_outline_black_48dp"
         />
 </menu>

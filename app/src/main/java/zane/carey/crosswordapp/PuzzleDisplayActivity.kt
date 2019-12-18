@@ -10,10 +10,12 @@ import android.widget.AdapterView
 import android.widget.GridView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.get
 import androidx.core.view.size
 import kotlinx.android.synthetic.main.cell_item.view.*
+import kotlinx.android.synthetic.main.custom_info_display.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,11 +34,18 @@ var rows = 0
 var cols = 0
 
 //game info
-var date = ""
+var date: String = ""
+var author: String = ""
+var editor: String = ""
 var clues: MutableList<String> = mutableListOf<String>()
+
+
 //current highlighted position value
 var highlightedPos = 0
-var highlightedRow: MutableList<Int> = mutableListOf<Int>()
+var highlightedCellsList: MutableList<Int> = mutableListOf<Int>()
+
+//current input mode
+var inputMode: String = "horizontal"
 
 //arrays for our grid
 private var gridnums: List<Int> = listOf(0)
@@ -76,9 +85,9 @@ class PuzzleDisplayActivity : AppCompatActivity() {
                 //remove highlight from former cells
                 cellGridView[highlightedPos].cellLayout.setBackgroundResource(R.drawable.border)
 
-                for(i in 0 until highlightedRow.size){
-                    cellGridView[highlightedRow[i]].cellLayout.setBackgroundResource(R.drawable.border)
-
+                for(i in 0 until highlightedCellsList.size){
+                    cellGridView[highlightedCellsList[i]].cellLayout.setBackgroundResource(R.drawable.border)
+                    highlightedCellsList.clear()
                 }
                 //add highlight to chosen cell
                 cellGridView[position].cellLayout.setBackgroundResource(R.drawable.green_border)
@@ -87,99 +96,119 @@ class PuzzleDisplayActivity : AppCompatActivity() {
                 var rowMultiplierLeft = 0
                 var rowMultiplierRight = 1
 
-                when(position){
-                    in cellGridView.numColumns..(cellGridView.numColumns * 2 - 1) ->
-                    {
-                        rowMultiplierRight = 2
-                        rowMultiplierLeft = 1
+                if(inputMode == "horizontal"){
+                    when(position){
+                        in cellGridView.numColumns..(cellGridView.numColumns * 2 - 1) ->
+                        {
+                            rowMultiplierRight = 2
+                            rowMultiplierLeft = 1
+                        }
+                        in cellGridView.numColumns*2..(cellGridView.numColumns * 3 - 1) ->
+                        {
+                            rowMultiplierRight = 3
+                            rowMultiplierLeft = 2
+                        }
+                        in cellGridView.numColumns*3..(cellGridView.numColumns * 4 - 1) ->
+                        {
+                            rowMultiplierRight = 4
+                            rowMultiplierLeft = 3
+                        }
+                        in cellGridView.numColumns*4..(cellGridView.numColumns * 5 - 1) ->
+                        {
+                            rowMultiplierRight = 5
+                            rowMultiplierLeft = 4
+                        }
+                        in cellGridView.numColumns*5..(cellGridView.numColumns * 6 - 1) ->
+                        {
+                            rowMultiplierRight = 6
+                            rowMultiplierLeft = 5
+                        }
+                        in cellGridView.numColumns*6..(cellGridView.numColumns * 7 - 1) ->
+                        {
+                            rowMultiplierRight = 7
+                            rowMultiplierLeft = 6
+                        }
+                        in cellGridView.numColumns*7..(cellGridView.numColumns * 8 - 1) ->
+                        {
+                            rowMultiplierRight = 8
+                            rowMultiplierLeft = 7
+                        }
+                        in cellGridView.numColumns*8..(cellGridView.numColumns * 9 - 1) ->
+                        {
+                            rowMultiplierRight = 9
+                            rowMultiplierLeft = 8
+                        }
+                        in cellGridView.numColumns*9..(cellGridView.numColumns * 10 - 1) ->
+                        {
+                            rowMultiplierRight = 10
+                            rowMultiplierLeft = 9
+                        }
+                        in cellGridView.numColumns*10..(cellGridView.numColumns * 11 - 1) ->
+                        {
+                            rowMultiplierRight = 11
+                            rowMultiplierLeft = 10
+                        }
+                        in cellGridView.numColumns*11..(cellGridView.numColumns * 12 - 1) ->
+                        {
+                            rowMultiplierRight = 12
+                            rowMultiplierLeft = 11
+                        }
+                        in cellGridView.numColumns*12..(cellGridView.numColumns * 13 - 1) ->
+                        {
+                            rowMultiplierRight = 13
+                            rowMultiplierLeft = 12
+                        }
+                        in cellGridView.numColumns*13..(cellGridView.numColumns * 14 - 1) ->
+                        {
+                            rowMultiplierRight = 14
+                            rowMultiplierLeft = 13
+                        }
+                        in cellGridView.numColumns*14..(cellGridView.numColumns * 15 - 1) ->
+                        {
+                            rowMultiplierRight = 15
+                            rowMultiplierLeft = 14
+                        }
+                        in cellGridView.numColumns*15..(cellGridView.numColumns * 16 - 1) ->
+                        {
+                            rowMultiplierRight = 16
+                            rowMultiplierLeft = 15
+                        }
                     }
-                    in cellGridView.numColumns*2..(cellGridView.numColumns * 3 - 1) ->
-                    {
-                        rowMultiplierRight = 3
-                        rowMultiplierLeft = 2
+
+                    for(i in (position - 1) downTo cellGridView.numColumns * rowMultiplierLeft){
+                        if(cellGridView[i].cellLetter.text != "."){
+                            cellGridView[i].setBackgroundResource(R.drawable.blue_border)
+                            highlightedCellsList.add(i)
+                        } else { break }
                     }
-                    in cellGridView.numColumns*3..(cellGridView.numColumns * 4 - 1) ->
-                    {
-                        rowMultiplierRight = 4
-                        rowMultiplierLeft = 3
+
+                    for(i in position + 1 until cellGridView.numColumns * rowMultiplierRight){
+
+                        if(cellGridView[i].cellLetter.text != "."){
+                            cellGridView[i].setBackgroundResource(R.drawable.blue_border)
+                            highlightedCellsList.add(i)
+                        } else {break}
                     }
-                    in cellGridView.numColumns*4..(cellGridView.numColumns * 5 - 1) ->
-                    {
-                        rowMultiplierRight = 5
-                        rowMultiplierLeft = 4
+                } else {
+                    var positionUp = position
+                    var positionDown = position
+                    while(positionUp - cellGridView.numColumns >= 0){
+                        positionUp -= cellGridView.numColumns
+                        if(cellGridView[positionUp].cellLetter.text != "."){
+                            cellGridView[positionUp].setBackgroundResource(R.drawable.blue_border)
+                            highlightedCellsList.add(positionUp)
+                        } else { break }
                     }
-                    in cellGridView.numColumns*5..(cellGridView.numColumns * 6 - 1) ->
-                    {
-                        rowMultiplierRight = 6
-                        rowMultiplierLeft = 5
-                    }
-                    in cellGridView.numColumns*6..(cellGridView.numColumns * 7 - 1) ->
-                    {
-                        rowMultiplierRight = 7
-                        rowMultiplierLeft = 6
-                    }
-                    in cellGridView.numColumns*7..(cellGridView.numColumns * 8 - 1) ->
-                    {
-                        rowMultiplierRight = 8
-                        rowMultiplierLeft = 7
-                    }
-                    in cellGridView.numColumns*8..(cellGridView.numColumns * 9 - 1) ->
-                    {
-                        rowMultiplierRight = 9
-                        rowMultiplierLeft = 8
-                    }
-                    in cellGridView.numColumns*9..(cellGridView.numColumns * 10 - 1) ->
-                    {
-                        rowMultiplierRight = 10
-                        rowMultiplierLeft = 9
-                    }
-                    in cellGridView.numColumns*10..(cellGridView.numColumns * 11 - 1) ->
-                    {
-                        rowMultiplierRight = 11
-                        rowMultiplierLeft = 10
-                    }
-                    in cellGridView.numColumns*11..(cellGridView.numColumns * 12 - 1) ->
-                    {
-                        rowMultiplierRight = 12
-                        rowMultiplierLeft = 11
-                    }
-                    in cellGridView.numColumns*12..(cellGridView.numColumns * 13 - 1) ->
-                    {
-                        rowMultiplierRight = 13
-                        rowMultiplierLeft = 12
-                    }
-                    in cellGridView.numColumns*13..(cellGridView.numColumns * 14 - 1) ->
-                    {
-                        rowMultiplierRight = 14
-                        rowMultiplierLeft = 13
-                    }
-                    in cellGridView.numColumns*14..(cellGridView.numColumns * 15 - 1) ->
-                    {
-                        rowMultiplierRight = 15
-                        rowMultiplierLeft = 14
-                    }
-                    in cellGridView.numColumns*15..(cellGridView.numColumns * 16 - 1) ->
-                    {
-                        rowMultiplierRight = 16
-                        rowMultiplierLeft = 15
+                    while(positionDown + cellGridView.numColumns <= cellGridView.size){
+                        positionDown += cellGridView.numColumns
+                        if(cellGridView[positionDown].cellLetter.text != "."){
+                            cellGridView[positionUp].setBackgroundResource(R.drawable.blue_border)
+                            highlightedCellsList.add(positionDown)
+                        } else { break }
                     }
                 }
 
-                for(i in (position - 1) downTo cellGridView.numColumns * rowMultiplierLeft){
-                    if(cellGridView[i].cellLetter.text != "."){
-                        cellGridView[i].setBackgroundResource(R.drawable.blue_border)
-                        highlightedRow.add(i)
-                    } else { break }
-                }
 
-                for(i in position + 1 until cellGridView.numColumns * rowMultiplierRight){
-
-                    if(cellGridView[i].cellLetter.text != "."){
-                        cellGridView[i].setBackgroundResource(R.drawable.blue_border)
-
-                        highlightedRow.add(i)
-                    } else {break}
-                }
 
                 //change highlighted position
                 highlightedPos = position
@@ -210,6 +239,8 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             cols = request.size.cols
 
             date = request.date
+            author = request.author
+            editor = request.editor
 
             clues = request.clues.across.toMutableList()
 
@@ -240,6 +271,38 @@ class PuzzleDisplayActivity : AppCompatActivity() {
                 cellGridView[i].setBackgroundResource(R.drawable.red_border)
             }
         }
+    }
+
+    //display the puzzle information in a dialog
+    private fun displayInfo(){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Puzzle Information")
+        val alertView = layoutInflater.inflate(R.layout.custom_info_display, null)
+        alertView.author_text_view.text = author
+        alertView.editor_text_view.text = editor
+        alertView.date_text_view.text = date
+
+        builder.setView(alertView)
+
+        builder.setPositiveButton("OK") {dialog, which ->
+
+        }
+        builder.show()
+
+
+    }
+
+    //flip the direction of the clue from horizontal to vertical and vice versa
+    private fun changeDirection(){
+        if(inputMode == "horizontal"){
+            inputMode = "vertical"
+        } else {
+            inputMode = "horizontal"
+        }
+
+        //change highlighted cells properly
+
+
     }
 
     //detect when letter is pushed, change current cell
@@ -424,7 +487,17 @@ class PuzzleDisplayActivity : AppCompatActivity() {
                 checkAnswer()
                 return true
             }
+            R.id.action_display_info -> {
+                displayInfo()
+                return true
+            }
+            R.id.action_change_direction -> {
+                changeDirection()
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }
+
+
 }
