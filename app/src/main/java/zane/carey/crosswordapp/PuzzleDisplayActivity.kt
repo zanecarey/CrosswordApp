@@ -20,6 +20,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.HttpException
 
 var year = ""
 var month = ""
@@ -91,6 +92,11 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
     private fun getPuzzleData(year: String, month: String, day: String) {
         val job = CoroutineScope(Dispatchers.Main).launch {
+//            try{
+//                val request = api.getPuzzle(year, month, day).await()
+//            } catch ( ex: HttpException) {
+//
+//            }
             val request = api.getPuzzle(year, month, day).await()
 
             rows = request.size.rows
