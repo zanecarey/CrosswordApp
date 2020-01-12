@@ -3,7 +3,9 @@ package zane.carey.crosswordapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.NumberPicker
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
@@ -19,9 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         randCardView = findViewById(R.id.randomCardView)
-
-        var test = 5
-        var testString = test.toString().padStart(2, '0')
+        chooseCard = findViewById(R.id.chooseCardView)
 
         randCardView.setOnClickListener{
             var year = (1976..2017).shuffled().first()
@@ -45,6 +45,19 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        chooseCard.setOnClickListener{
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Choose a Date")
+
+            val numberPicker = NumberPicker(this)
+            numberPicker.minValue = 1976
+            numberPicker.maxValue = 2018
+            builder.setView(numberPicker)
+
+            builder.setPositiveButton("Ok") { dialog, which ->
+
+            }
+        }
 
     }
 
