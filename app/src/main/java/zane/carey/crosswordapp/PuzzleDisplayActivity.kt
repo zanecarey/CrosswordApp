@@ -67,7 +67,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         //displayLayout = findViewById(R.id.display_layout)
 
 
-            getDate()
+            getRandomDate()
 
             getPuzzleData(year, month, day)
 
@@ -78,16 +78,24 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         }
     }
 
-    private fun getDate() {
-        if (getIntent().hasExtra("year")) {
-            year = getIntent().getStringExtra("year")
+    private fun getRandomDate() {
+        val yearVal = (1976..2017).shuffled().first()
+        val monthVal = (1..12).shuffled().first()
+        val dayVal = (1..30).shuffled().first()
+
+        if(monthVal < 10){
+            month = monthVal.toString().padStart(2, '0')
+        } else {
+            month = monthVal.toString()
         }
-        if (getIntent().hasExtra("month")) {
-            month = getIntent().getStringExtra("month")
+
+        if(dayVal < 10){
+            day = dayVal.toString().padStart(2,'0')
+        } else {
+            day = dayVal.toString()
         }
-        if (getIntent().hasExtra("day")) {
-            day = getIntent().getStringExtra("day")
-        }
+
+        year = yearVal.toString()
     }
 
     private fun getPuzzleData(year: String, month: String, day: String) {

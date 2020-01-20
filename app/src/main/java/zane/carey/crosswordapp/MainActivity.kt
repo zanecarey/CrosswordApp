@@ -24,24 +24,9 @@ class MainActivity : AppCompatActivity() {
         chooseCard = findViewById(R.id.chooseCardView)
 
         randCardView.setOnClickListener{
-            var year = (1976..2017).shuffled().first()
-            var month = (1..12).shuffled().first()
-            var day = (1..30).shuffled().first()
 
             val intent = Intent(this, PuzzleDisplayActivity::class.java)
 
-            if(month < 10){
-                intent.putExtra("month", month.toString().padStart(2, '0'))
-            } else {
-                intent.putExtra("month", month.toString())
-            }
-
-            if(day < 10){
-                intent.putExtra("day", day.toString().padStart(2, '0'))
-            } else {
-                intent.putExtra("day", day.toString())
-            }
-            intent.putExtra("year", year.toString())
             startActivity(intent)
         }
 
