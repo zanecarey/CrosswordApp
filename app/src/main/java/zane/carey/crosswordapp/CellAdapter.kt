@@ -11,50 +11,47 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.cell_item.view.*
 
-class CellAdapter(val list: List<Cell>) : BaseAdapter() {
+class CellAdapter(val list: List<Cell>, val context: Context) :
+    RecyclerView.Adapter<CellAdapter.ViewHolder>() {
 
     private val myList = list
 
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        // Inflate the custom view
-        val inflater =
-            parent?.context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.cell_item, null)
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
+        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.cell_item, p0, false))
+    }
 
-        // Get the custom view widgets reference
-        val num = view.findViewById<TextView>(R.id.cellNumber)
-        val letter = view.findViewById<TextView>(R.id.cellLetter)
-        val cellLayout = view.findViewById<LinearLayout>(R.id.cellLayout)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        if(myList[position].number != 0){
-            num.text = myList[position].number.toString()
+        if (myList[position].number != 0) {
+            holder.num.text = myList[position].number.toString()
         } else {
-            num.visibility = View.INVISIBLE
+            holder.num.visibility = View.INVISIBLE
         }
 
         //check if character is ".", if it is then make cell blank and unclickable
-        if(myList[position].letter == "."){
-            cellLayout.setBackgroundColor(Color.BLACK)
-            cellLayout.isClickable = false
-            letter.text = myList[position].letter
+        if (myList[position].letter == ".") {
+            holder.layout.setBackgroundColor(Color.BLACK)
+            holder.layout.isClickable = false
+            holder.letter.text = myList[position].letter
         } else {
-            letter.text = myList[position].letter.toString()
+            holder.letter.text = myList[position].letter.toString()
         }
-        return view
     }
 
-    override fun getItem(position: Int): Any {
-        return myList[position]
-    }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
-    override fun getCount(): Int {
+    override fun getItemCount(): Int {
         return list.size
     }
 
+
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val num = view.cellNumber
+        val letter = view.cellLetter
+        val layout = view.cellLayout
+
+    }
 }

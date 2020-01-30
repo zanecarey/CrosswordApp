@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.get
 import androidx.core.view.size
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.cell_item.view.*
 import kotlinx.android.synthetic.main.custom_info_display.view.*
 import kotlinx.coroutines.CoroutineScope
@@ -26,7 +27,7 @@ var year = ""
 var month = ""
 var day = ""
 
-private lateinit var cellGridView: GridView
+private lateinit var cellRecyclerView: RecyclerView
 private lateinit var displayLayout: ConstraintLayout
 private lateinit var clueTextView: TextView
 
@@ -61,17 +62,24 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_puzzle_display)
 
-        cellGridView = findViewById(R.id.crosswordGridView)
+        cellRecyclerView = findViewById(R.id.crosswordGridView)
 
         clueTextView = findViewById(R.id.clue_TextView)
         //displayLayout = findViewById(R.id.display_layout)
 
 
+        if(intent.getStringExtra("puzzleType") == "random"){
             getRandomDate()
+        } else {
+            year = intent.getIntExtra("pickerValue", 2015).toString()
+            month = "05"
+            day = "05"
+        }
 
-            getPuzzleData(year, month, day)
 
-        cellGridView.setOnItemClickListener { parent, view, position, id ->
+        getPuzzleData("2008", "11", "15")
+
+        cellRecyclerView.setOnItemClickListener { parent, view, position, id ->
 
             highlightCells(position)
 
@@ -102,10 +110,12 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         val job = CoroutineScope(Dispatchers.Main).launch {
 //            try{
 //                val request = api.getPuzzle(year, month, day).await()
+//
 //            } catch ( ex: HttpException) {
 //
 //            }
             val request = api.getPuzzle(year, month, day).await()
+
 
             rows = request.size.rows
             cols = request.size.cols
@@ -117,17 +127,18 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             cluesAcross = request.clues.across.toMutableList()
             cluesDown = request.clues.down.toMutableList()
 
-            cellGridView.numColumns = cols
+            cellRecyclerView.numColumns = cols
 
             gridnums = request.gridnums
             grid = request.grid
 
-            for (i in 0 until grid.size - 1) {
+            for (i in 0 until grid.size) {
                 cellList.add(Cell(grid[i], gridnums[i]))
             }
             val adapter = CellAdapter(cellList)
 
-            cellGridView.adapter = adapter
+
+            cellRecyclerView.adapter = adapter
 
             //update ui info
             withContext(Dispatchers.Main) {
@@ -139,9 +150,9 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
     private fun checkAnswer(){
         //check every cell that has a letter inputted and show whether it is correct or not
-        for(i in 0 until cellGridView.size-1){
-            if(cellGridView[i].cellLetter.text != "*" && cellGridView[i].cellLetter.text != grid[i]){
-                cellGridView[i].setBackgroundResource(R.drawable.red_border)
+        for(i in 0 until cellRecyclerView.size-1){
+            if(cellRecyclerView[i].cellLetter.text != "*" && cellRecyclerView[i].cellLetter.text != grid[i]){
+                cellRecyclerView[i].setBackgroundResource(R.drawable.red_border)
             }
         }
     }
@@ -184,18 +195,18 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         //change clue to display to player
 
         //get correct clue number
-        var clueNum = 0
-        for(i in 0 until position){
-            if(cellGridView[i].cellLetter.text == "."){
-                clueNum++
-            }
-        }
+//        var clueNum = 0
+//        for(i in 0 until position){
+//            if(cellRecyclerView[i].cellLetter.text == "."){
+//                clueNum++
+//            }
+//        }
 
-        if(inputMode == "horizontal"){
-            clueTextView.text = cluesAcross[clueNum]
-        } else {
-            clueTextView.text = cluesDown[clueNum]
-        }
+//        if(inputMode == "horizontal"){
+//            clueTextView.text = cluesAcross[clueNum]
+//        } else {
+//            clueTextView.text = cluesDown[clueNum]
+//        }
 
 
 
@@ -203,16 +214,16 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         if(grid[position] != ".") {
 
             //remove highlight from former cells
-            cellGridView[highlightedPos].cellLayout.setBackgroundResource(R.drawable.border)
+            cellRecyclerView[highlightedPos].cellLayout.setBackgroundResource(R.drawable.border)
 
             for (i in 0 until highlightedCellsList.size) {
-                cellGridView[highlightedCellsList[i]].cellLayout.setBackgroundResource(R.drawable.border)
+                cellRecyclerView[highlightedCellsList[i]].cellLayout.setBackgroundResource(R.drawable.border)
             }
 
             highlightedCellsList.clear()
 
             //add highlight to chosen cell
-            cellGridView[position].cellLayout.setBackgroundResource(R.drawable.green_border)
+            cellRecyclerView[position].cellLayout.setBackgroundResource(R.drawable.green_border)
 
             //add highlights for the whole row if on horizontal mode
             if (inputMode == "horizontal") {
@@ -221,81 +232,81 @@ class PuzzleDisplayActivity : AppCompatActivity() {
                 var rowMultiplierRight = 1
 
                 when (position) {
-                    in cellGridView.numColumns..(cellGridView.numColumns * 2 - 1) -> {
+                    in cellRecyclerView.numColumns..(cellRecyclerView.numColumns * 2 - 1) -> {
                         rowMultiplierRight = 2
                         rowMultiplierLeft = 1
                     }
-                    in cellGridView.numColumns * 2..(cellGridView.numColumns * 3 - 1) -> {
+                    in cellRecyclerView.numColumns * 2..(cellRecyclerView.numColumns * 3 - 1) -> {
                         rowMultiplierRight = 3
                         rowMultiplierLeft = 2
                     }
-                    in cellGridView.numColumns * 3..(cellGridView.numColumns * 4 - 1) -> {
+                    in cellRecyclerView.numColumns * 3..(cellRecyclerView.numColumns * 4 - 1) -> {
                         rowMultiplierRight = 4
                         rowMultiplierLeft = 3
                     }
-                    in cellGridView.numColumns * 4..(cellGridView.numColumns * 5 - 1) -> {
+                    in cellRecyclerView.numColumns * 4..(cellRecyclerView.numColumns * 5 - 1) -> {
                         rowMultiplierRight = 5
                         rowMultiplierLeft = 4
                     }
-                    in cellGridView.numColumns * 5..(cellGridView.numColumns * 6 - 1) -> {
+                    in cellRecyclerView.numColumns * 5..(cellRecyclerView.numColumns * 6 - 1) -> {
                         rowMultiplierRight = 6
                         rowMultiplierLeft = 5
                     }
-                    in cellGridView.numColumns * 6..(cellGridView.numColumns * 7 - 1) -> {
+                    in cellRecyclerView.numColumns * 6..(cellRecyclerView.numColumns * 7 - 1) -> {
                         rowMultiplierRight = 7
                         rowMultiplierLeft = 6
                     }
-                    in cellGridView.numColumns * 7..(cellGridView.numColumns * 8 - 1) -> {
+                    in cellRecyclerView.numColumns * 7..(cellRecyclerView.numColumns * 8 - 1) -> {
                         rowMultiplierRight = 8
                         rowMultiplierLeft = 7
                     }
-                    in cellGridView.numColumns * 8..(cellGridView.numColumns * 9 - 1) -> {
+                    in cellRecyclerView.numColumns * 8..(cellRecyclerView.numColumns * 9 - 1) -> {
                         rowMultiplierRight = 9
                         rowMultiplierLeft = 8
                     }
-                    in cellGridView.numColumns * 9..(cellGridView.numColumns * 10 - 1) -> {
+                    in cellRecyclerView.numColumns * 9..(cellRecyclerView.numColumns * 10 - 1) -> {
                         rowMultiplierRight = 10
                         rowMultiplierLeft = 9
                     }
-                    in cellGridView.numColumns * 10..(cellGridView.numColumns * 11 - 1) -> {
+                    in cellRecyclerView.numColumns * 10..(cellRecyclerView.numColumns * 11 - 1) -> {
                         rowMultiplierRight = 11
                         rowMultiplierLeft = 10
                     }
-                    in cellGridView.numColumns * 11..(cellGridView.numColumns * 12 - 1) -> {
+                    in cellRecyclerView.numColumns * 11..(cellRecyclerView.numColumns * 12 - 1) -> {
                         rowMultiplierRight = 12
                         rowMultiplierLeft = 11
                     }
-                    in cellGridView.numColumns * 12..(cellGridView.numColumns * 13 - 1) -> {
+                    in cellRecyclerView.numColumns * 12..(cellRecyclerView.numColumns * 13 - 1) -> {
                         rowMultiplierRight = 13
                         rowMultiplierLeft = 12
                     }
-                    in cellGridView.numColumns * 13..(cellGridView.numColumns * 14 - 1) -> {
+                    in cellRecyclerView.numColumns * 13..(cellRecyclerView.numColumns * 14 - 1) -> {
                         rowMultiplierRight = 14
                         rowMultiplierLeft = 13
                     }
-                    in cellGridView.numColumns * 14..(cellGridView.numColumns * 15 - 1) -> {
+                    in cellRecyclerView.numColumns * 14..(cellRecyclerView.numColumns * 15 - 1) -> {
                         rowMultiplierRight = 15
                         rowMultiplierLeft = 14
                     }
-                    in cellGridView.numColumns * 15..(cellGridView.numColumns * 16 - 1) -> {
+                    in cellRecyclerView.numColumns * 15..(cellRecyclerView.numColumns * 16 - 1) -> {
                         rowMultiplierRight = 16
                         rowMultiplierLeft = 15
                     }
                 }
 
-                for (i in (position - 1) downTo cellGridView.numColumns * rowMultiplierLeft) {
-                    if (cellGridView[i].cellLetter.text != ".") {
-                        cellGridView[i].setBackgroundResource(R.drawable.blue_border)
+                for (i in (position - 1) downTo cellRecyclerView.numColumns * rowMultiplierLeft) {
+                    if (cellRecyclerView[i].cellLetter.text != ".") {
+                        cellRecyclerView[i].setBackgroundResource(R.drawable.blue_border)
                         highlightedCellsList.add(i)
                     } else {
                         break
                     }
                 }
 
-                for (i in position + 1 until cellGridView.numColumns * rowMultiplierRight) {
+                for (i in position + 1 until cellRecyclerView.numColumns * rowMultiplierRight) {
 
-                    if (cellGridView[i].cellLetter.text != ".") {
-                        cellGridView[i].setBackgroundResource(R.drawable.blue_border)
+                    if (cellRecyclerView[i].cellLetter.text != ".") {
+                        cellRecyclerView[i].setBackgroundResource(R.drawable.blue_border)
                         highlightedCellsList.add(i)
                     } else {
                         break
@@ -304,19 +315,19 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             } else {
                 var positionUp = position
                 var positionDown = position
-                while (positionUp - cellGridView.numColumns >= 0) {
-                    positionUp -= cellGridView.numColumns
-                    if (cellGridView[positionUp].cellLetter.text != ".") {
-                        cellGridView[positionUp].setBackgroundResource(R.drawable.blue_border)
+                while (positionUp - cellRecyclerView.numColumns >= 0) {
+                    positionUp -= cellRecyclerView.numColumns
+                    if (cellRecyclerView[positionUp].cellLetter.text != ".") {
+                        cellRecyclerView[positionUp].setBackgroundResource(R.drawable.blue_border)
                         highlightedCellsList.add(positionUp)
                     } else {
                         break
                     }
                 }
-                while (positionDown + cellGridView.numColumns <= cellGridView.size) {
-                    positionDown += cellGridView.numColumns
-                    if (cellGridView[positionDown].cellLetter.text != ".") {
-                        cellGridView[positionDown].setBackgroundResource(R.drawable.blue_border)
+                while (positionDown + cellRecyclerView.numColumns <= cellRecyclerView.size) {
+                    positionDown += cellRecyclerView.numColumns
+                    if (cellRecyclerView[positionDown].cellLetter.text != ".") {
+                        cellRecyclerView[positionDown].setBackgroundResource(R.drawable.blue_border)
                         highlightedCellsList.add(positionDown)
                     } else {
                         break
@@ -337,158 +348,158 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             }
             KeyEvent.KEYCODE_A -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "A"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "A"
                 true
             }
             KeyEvent.KEYCODE_B -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "B"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "B"
                 true
             }
             KeyEvent.KEYCODE_C -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "C"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "C"
                 true
             }
             KeyEvent.KEYCODE_D -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "D"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "D"
                 true
             }
             KeyEvent.KEYCODE_E -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "E"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "E"
                 true
             }
             KeyEvent.KEYCODE_F -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "F"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "F"
                 true
             }
             KeyEvent.KEYCODE_G -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "G"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "G"
                 true
             }
             KeyEvent.KEYCODE_H -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "H"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "H"
                 true
             }
             KeyEvent.KEYCODE_I -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "I"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "I"
                 true
             }
             KeyEvent.KEYCODE_J -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "J"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "J"
                 true
             }
             KeyEvent.KEYCODE_K -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "K"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "K"
                 true
             }
             KeyEvent.KEYCODE_L -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "L"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "L"
                 true
             }
             KeyEvent.KEYCODE_M -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "M"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "M"
                 true
             }
             KeyEvent.KEYCODE_N -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "N"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "N"
                 true
             }
             KeyEvent.KEYCODE_O -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "O"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "O"
                 true
             }
             KeyEvent.KEYCODE_P -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "P"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "P"
                 true
             }
             KeyEvent.KEYCODE_Q -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "Q"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "Q"
                 true
             }
             KeyEvent.KEYCODE_R -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "R"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "R"
                 true
             }
             KeyEvent.KEYCODE_S -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "S"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "S"
                 true
             }
             KeyEvent.KEYCODE_T -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "T"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "T"
                 true
             }
             KeyEvent.KEYCODE_U -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "U"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "U"
                 true
             }
             KeyEvent.KEYCODE_V -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "V"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "V"
                 true
             }
             KeyEvent.KEYCODE_W -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "W"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "W"
                 true
             }
             KeyEvent.KEYCODE_X -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "X"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "X"
                 true
             }
             KeyEvent.KEYCODE_Y -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "Y"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "Y"
                 true
             }
             KeyEvent.KEYCODE_Z -> {
                 //current cell letter updated
-                cellGridView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellGridView[highlightedPos].cellLetter.text = "Z"
+                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[highlightedPos].cellLetter.text = "Z"
                 true
             }
             else -> super.onKeyUp(keyCode, event)

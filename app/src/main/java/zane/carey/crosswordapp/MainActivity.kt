@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 
             val intent = Intent(this, PuzzleDisplayActivity::class.java)
 
+            intent.putExtra("puzzleType", "random")
             startActivity(intent)
         }
 
@@ -41,6 +42,10 @@ class MainActivity : AppCompatActivity() {
 
             builder.setPositiveButton("Ok") { dialog, which ->
 
+                val intent = Intent(this, PuzzleDisplayActivity::class.java)
+                intent.putExtra("puzzleType", "choice")
+                intent.putExtra("pickerValue", numberPicker.value)
+                startActivity(intent)
             }
         }
 
