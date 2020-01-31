@@ -40,6 +40,10 @@ class CellAdapter(val list: List<Cell>, val context: Context) :
         } else {
             holder.letter.text = myList[position].letter.toString()
         }
+
+        holder.layout.setOnClickListener{
+            holder.layout.setBackgroundResource(R.drawable.green_border)
+        }
     }
 
 

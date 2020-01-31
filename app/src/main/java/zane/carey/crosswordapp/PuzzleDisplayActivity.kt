@@ -14,6 +14,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.get
 import androidx.core.view.size
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.cell_item.view.*
 import kotlinx.android.synthetic.main.custom_info_display.view.*
@@ -62,7 +64,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_puzzle_display)
 
-        cellRecyclerView = findViewById(R.id.crosswordGridView)
+        cellRecyclerView = findViewById(R.id.crosswordRecyclerView)
 
         clueTextView = findViewById(R.id.clue_TextView)
         //displayLayout = findViewById(R.id.display_layout)
@@ -79,11 +81,6 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
         getPuzzleData("2008", "11", "15")
 
-        cellRecyclerView.setOnItemClickListener { parent, view, position, id ->
-
-            highlightCells(position)
-
-        }
     }
 
     private fun getRandomDate() {
@@ -127,7 +124,8 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             cluesAcross = request.clues.across.toMutableList()
             cluesDown = request.clues.down.toMutableList()
 
-            cellRecyclerView.numColumns = cols
+
+            //cellRecyclerView.numColumns = cols
 
             gridnums = request.gridnums
             grid = request.grid
@@ -135,10 +133,13 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             for (i in 0 until grid.size) {
                 cellList.add(Cell(grid[i], gridnums[i]))
             }
-            val adapter = CellAdapter(cellList)
+            val adapter = CellAdapter(cellList, this@PuzzleDisplayActivity)
 
 
             cellRecyclerView.adapter = adapter
+
+            cellRecyclerView.layoutManager =
+                GridLayoutManager(this@PuzzleDisplayActivity, 15)
 
             //update ui info
             withContext(Dispatchers.Main) {
@@ -231,111 +232,8 @@ class PuzzleDisplayActivity : AppCompatActivity() {
                 var rowMultiplierLeft = 0
                 var rowMultiplierRight = 1
 
-                when (position) {
-                    in cellRecyclerView.numColumns..(cellRecyclerView.numColumns * 2 - 1) -> {
-                        rowMultiplierRight = 2
-                        rowMultiplierLeft = 1
-                    }
-                    in cellRecyclerView.numColumns * 2..(cellRecyclerView.numColumns * 3 - 1) -> {
-                        rowMultiplierRight = 3
-                        rowMultiplierLeft = 2
-                    }
-                    in cellRecyclerView.numColumns * 3..(cellRecyclerView.numColumns * 4 - 1) -> {
-                        rowMultiplierRight = 4
-                        rowMultiplierLeft = 3
-                    }
-                    in cellRecyclerView.numColumns * 4..(cellRecyclerView.numColumns * 5 - 1) -> {
-                        rowMultiplierRight = 5
-                        rowMultiplierLeft = 4
-                    }
-                    in cellRecyclerView.numColumns * 5..(cellRecyclerView.numColumns * 6 - 1) -> {
-                        rowMultiplierRight = 6
-                        rowMultiplierLeft = 5
-                    }
-                    in cellRecyclerView.numColumns * 6..(cellRecyclerView.numColumns * 7 - 1) -> {
-                        rowMultiplierRight = 7
-                        rowMultiplierLeft = 6
-                    }
-                    in cellRecyclerView.numColumns * 7..(cellRecyclerView.numColumns * 8 - 1) -> {
-                        rowMultiplierRight = 8
-                        rowMultiplierLeft = 7
-                    }
-                    in cellRecyclerView.numColumns * 8..(cellRecyclerView.numColumns * 9 - 1) -> {
-                        rowMultiplierRight = 9
-                        rowMultiplierLeft = 8
-                    }
-                    in cellRecyclerView.numColumns * 9..(cellRecyclerView.numColumns * 10 - 1) -> {
-                        rowMultiplierRight = 10
-                        rowMultiplierLeft = 9
-                    }
-                    in cellRecyclerView.numColumns * 10..(cellRecyclerView.numColumns * 11 - 1) -> {
-                        rowMultiplierRight = 11
-                        rowMultiplierLeft = 10
-                    }
-                    in cellRecyclerView.numColumns * 11..(cellRecyclerView.numColumns * 12 - 1) -> {
-                        rowMultiplierRight = 12
-                        rowMultiplierLeft = 11
-                    }
-                    in cellRecyclerView.numColumns * 12..(cellRecyclerView.numColumns * 13 - 1) -> {
-                        rowMultiplierRight = 13
-                        rowMultiplierLeft = 12
-                    }
-                    in cellRecyclerView.numColumns * 13..(cellRecyclerView.numColumns * 14 - 1) -> {
-                        rowMultiplierRight = 14
-                        rowMultiplierLeft = 13
-                    }
-                    in cellRecyclerView.numColumns * 14..(cellRecyclerView.numColumns * 15 - 1) -> {
-                        rowMultiplierRight = 15
-                        rowMultiplierLeft = 14
-                    }
-                    in cellRecyclerView.numColumns * 15..(cellRecyclerView.numColumns * 16 - 1) -> {
-                        rowMultiplierRight = 16
-                        rowMultiplierLeft = 15
-                    }
-                }
-
-                for (i in (position - 1) downTo cellRecyclerView.numColumns * rowMultiplierLeft) {
-                    if (cellRecyclerView[i].cellLetter.text != ".") {
-                        cellRecyclerView[i].setBackgroundResource(R.drawable.blue_border)
-                        highlightedCellsList.add(i)
-                    } else {
-                        break
-                    }
-                }
-
-                for (i in position + 1 until cellRecyclerView.numColumns * rowMultiplierRight) {
-
-                    if (cellRecyclerView[i].cellLetter.text != ".") {
-                        cellRecyclerView[i].setBackgroundResource(R.drawable.blue_border)
-                        highlightedCellsList.add(i)
-                    } else {
-                        break
-                    }
-                }
-            } else {
-                var positionUp = position
-                var positionDown = position
-                while (positionUp - cellRecyclerView.numColumns >= 0) {
-                    positionUp -= cellRecyclerView.numColumns
-                    if (cellRecyclerView[positionUp].cellLetter.text != ".") {
-                        cellRecyclerView[positionUp].setBackgroundResource(R.drawable.blue_border)
-                        highlightedCellsList.add(positionUp)
-                    } else {
-                        break
-                    }
-                }
-                while (positionDown + cellRecyclerView.numColumns <= cellRecyclerView.size) {
-                    positionDown += cellRecyclerView.numColumns
-                    if (cellRecyclerView[positionDown].cellLetter.text != ".") {
-                        cellRecyclerView[positionDown].setBackgroundResource(R.drawable.blue_border)
-                        highlightedCellsList.add(positionDown)
-                    } else {
-                        break
-                    }
-                }
+                highlightedPos = position
             }
-            //change highlighted position
-            highlightedPos = position
         }
     }
 
