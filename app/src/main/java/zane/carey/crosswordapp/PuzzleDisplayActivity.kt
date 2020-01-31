@@ -46,7 +46,12 @@ var cluesDown: MutableList<String> = mutableListOf<String>()
 
 
 //current highlighted position value
-var highlightedPos = 0
+class HighlightedPosition{
+    companion object{
+        var position = 0
+    }
+}
+
 var highlightedCellsList: MutableList<Int> = mutableListOf<Int>()
 
 //current input mode
@@ -141,6 +146,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             cellRecyclerView.layoutManager =
                 GridLayoutManager(this@PuzzleDisplayActivity, 15)
 
+
             //update ui info
             withContext(Dispatchers.Main) {
 
@@ -188,7 +194,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         }
 
         //change highlighted cells properly
-        highlightCells(highlightedPos)
+        //highlightCells(highlightedPos)
     }
 
     private fun highlightCells(position: Int){
@@ -210,31 +216,6 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 //        }
 
 
-
-        //check if cell is a blank cell
-        if(grid[position] != ".") {
-
-            //remove highlight from former cells
-            cellRecyclerView[highlightedPos].cellLayout.setBackgroundResource(R.drawable.border)
-
-            for (i in 0 until highlightedCellsList.size) {
-                cellRecyclerView[highlightedCellsList[i]].cellLayout.setBackgroundResource(R.drawable.border)
-            }
-
-            highlightedCellsList.clear()
-
-            //add highlight to chosen cell
-            cellRecyclerView[position].cellLayout.setBackgroundResource(R.drawable.green_border)
-
-            //add highlights for the whole row if on horizontal mode
-            if (inputMode == "horizontal") {
-
-                var rowMultiplierLeft = 0
-                var rowMultiplierRight = 1
-
-                highlightedPos = position
-            }
-        }
     }
 
     //detect when letter is pushed, change current cell
@@ -246,160 +227,160 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             }
             KeyEvent.KEYCODE_A -> {
                 //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "A"
+                cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[HighlightedPosition.position].cellLetter.text = "A"
                 true
             }
             KeyEvent.KEYCODE_B -> {
                 //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "B"
+                cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[HighlightedPosition.position].cellLetter.text = "B"
                 true
             }
             KeyEvent.KEYCODE_C -> {
                 //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "C"
+                cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
+                cellRecyclerView[HighlightedPosition.position].cellLetter.text = "C"
                 true
             }
-            KeyEvent.KEYCODE_D -> {
-                //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "D"
-                true
-            }
-            KeyEvent.KEYCODE_E -> {
-                //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "E"
-                true
-            }
-            KeyEvent.KEYCODE_F -> {
-                //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "F"
-                true
-            }
-            KeyEvent.KEYCODE_G -> {
-                //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "G"
-                true
-            }
-            KeyEvent.KEYCODE_H -> {
-                //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "H"
-                true
-            }
-            KeyEvent.KEYCODE_I -> {
-                //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "I"
-                true
-            }
-            KeyEvent.KEYCODE_J -> {
-                //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "J"
-                true
-            }
-            KeyEvent.KEYCODE_K -> {
-                //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "K"
-                true
-            }
-            KeyEvent.KEYCODE_L -> {
-                //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "L"
-                true
-            }
-            KeyEvent.KEYCODE_M -> {
-                //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "M"
-                true
-            }
-            KeyEvent.KEYCODE_N -> {
-                //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "N"
-                true
-            }
-            KeyEvent.KEYCODE_O -> {
-                //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "O"
-                true
-            }
-            KeyEvent.KEYCODE_P -> {
-                //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "P"
-                true
-            }
-            KeyEvent.KEYCODE_Q -> {
-                //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "Q"
-                true
-            }
-            KeyEvent.KEYCODE_R -> {
-                //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "R"
-                true
-            }
-            KeyEvent.KEYCODE_S -> {
-                //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "S"
-                true
-            }
-            KeyEvent.KEYCODE_T -> {
-                //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "T"
-                true
-            }
-            KeyEvent.KEYCODE_U -> {
-                //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "U"
-                true
-            }
-            KeyEvent.KEYCODE_V -> {
-                //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "V"
-                true
-            }
-            KeyEvent.KEYCODE_W -> {
-                //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "W"
-                true
-            }
-            KeyEvent.KEYCODE_X -> {
-                //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "X"
-                true
-            }
-            KeyEvent.KEYCODE_Y -> {
-                //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "Y"
-                true
-            }
-            KeyEvent.KEYCODE_Z -> {
-                //current cell letter updated
-                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
-                cellRecyclerView[highlightedPos].cellLetter.text = "Z"
-                true
-            }
+//            KeyEvent.KEYCODE_D -> {
+//                //current cell letter updated
+//                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+//                cellRecyclerView[highlightedPos].cellLetter.text = "D"
+//                true
+//            }
+//            KeyEvent.KEYCODE_E -> {
+//                //current cell letter updated
+//                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+//                cellRecyclerView[highlightedPos].cellLetter.text = "E"
+//                true
+//            }
+//            KeyEvent.KEYCODE_F -> {
+//                //current cell letter updated
+//                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+//                cellRecyclerView[highlightedPos].cellLetter.text = "F"
+//                true
+//            }
+//            KeyEvent.KEYCODE_G -> {
+//                //current cell letter updated
+//                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+//                cellRecyclerView[highlightedPos].cellLetter.text = "G"
+//                true
+//            }
+//            KeyEvent.KEYCODE_H -> {
+//                //current cell letter updated
+//                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+//                cellRecyclerView[highlightedPos].cellLetter.text = "H"
+//                true
+//            }
+//            KeyEvent.KEYCODE_I -> {
+//                //current cell letter updated
+//                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+//                cellRecyclerView[highlightedPos].cellLetter.text = "I"
+//                true
+//            }
+//            KeyEvent.KEYCODE_J -> {
+//                //current cell letter updated
+//                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+//                cellRecyclerView[highlightedPos].cellLetter.text = "J"
+//                true
+//            }
+//            KeyEvent.KEYCODE_K -> {
+//                //current cell letter updated
+//                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+//                cellRecyclerView[highlightedPos].cellLetter.text = "K"
+//                true
+//            }
+//            KeyEvent.KEYCODE_L -> {
+//                //current cell letter updated
+//                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+//                cellRecyclerView[highlightedPos].cellLetter.text = "L"
+//                true
+//            }
+//            KeyEvent.KEYCODE_M -> {
+//                //current cell letter updated
+//                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+//                cellRecyclerView[highlightedPos].cellLetter.text = "M"
+//                true
+//            }
+//            KeyEvent.KEYCODE_N -> {
+//                //current cell letter updated
+//                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+//                cellRecyclerView[highlightedPos].cellLetter.text = "N"
+//                true
+//            }
+//            KeyEvent.KEYCODE_O -> {
+//                //current cell letter updated
+//                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+//                cellRecyclerView[highlightedPos].cellLetter.text = "O"
+//                true
+//            }
+//            KeyEvent.KEYCODE_P -> {
+//                //current cell letter updated
+//                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+//                cellRecyclerView[highlightedPos].cellLetter.text = "P"
+//                true
+//            }
+//            KeyEvent.KEYCODE_Q -> {
+//                //current cell letter updated
+//                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+//                cellRecyclerView[highlightedPos].cellLetter.text = "Q"
+//                true
+//            }
+//            KeyEvent.KEYCODE_R -> {
+//                //current cell letter updated
+//                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+//                cellRecyclerView[highlightedPos].cellLetter.text = "R"
+//                true
+//            }
+//            KeyEvent.KEYCODE_S -> {
+//                //current cell letter updated
+//                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+//                cellRecyclerView[highlightedPos].cellLetter.text = "S"
+//                true
+//            }
+//            KeyEvent.KEYCODE_T -> {
+//                //current cell letter updated
+//                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+//                cellRecyclerView[highlightedPos].cellLetter.text = "T"
+//                true
+//            }
+//            KeyEvent.KEYCODE_U -> {
+//                //current cell letter updated
+//                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+//                cellRecyclerView[highlightedPos].cellLetter.text = "U"
+//                true
+//            }
+//            KeyEvent.KEYCODE_V -> {
+//                //current cell letter updated
+//                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+//                cellRecyclerView[highlightedPos].cellLetter.text = "V"
+//                true
+//            }
+//            KeyEvent.KEYCODE_W -> {
+//                //current cell letter updated
+//                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+//                cellRecyclerView[highlightedPos].cellLetter.text = "W"
+//                true
+//            }
+//            KeyEvent.KEYCODE_X -> {
+//                //current cell letter updated
+//                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+//                cellRecyclerView[highlightedPos].cellLetter.text = "X"
+//                true
+//            }
+//            KeyEvent.KEYCODE_Y -> {
+//                //current cell letter updated
+//                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+//                cellRecyclerView[highlightedPos].cellLetter.text = "Y"
+//                true
+//            }
+//            KeyEvent.KEYCODE_Z -> {
+//                //current cell letter updated
+//                cellRecyclerView[highlightedPos].cellLetter.visibility = View.VISIBLE
+//                cellRecyclerView[highlightedPos].cellLetter.text = "Z"
+//                true
+            //}
             else -> super.onKeyUp(keyCode, event)
         }
     }
