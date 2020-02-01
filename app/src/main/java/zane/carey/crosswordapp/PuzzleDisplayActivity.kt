@@ -86,6 +86,8 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
         getPuzzleData("2008", "11", "15")
 
+
+
     }
 
     private fun getRandomDate() {
@@ -197,26 +199,12 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         //highlightCells(HighlightedPosition.position)
     }
 
-    private fun highlightCells(position: Int){
+   fun removeHighlight(position: Int){
 
-        //change clue to display to player
-
-        //get correct clue number
-//        var clueNum = 0
-//        for(i in 0 until position){
-//            if(cellRecyclerView[i].cellLetter.text == "."){
-//                clueNum++
-//            }
-//        }
-
-//        if(inputMode == "horizontal"){
-//            clueTextView.text = cluesAcross[clueNum]
-//        } else {
-//            clueTextView.text = cluesDown[clueNum]
-//        }
-
+        cellRecyclerView[position].setBackgroundResource(R.drawable.border)
 
     }
+
 
     //detect when letter is pushed, change current cell
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {

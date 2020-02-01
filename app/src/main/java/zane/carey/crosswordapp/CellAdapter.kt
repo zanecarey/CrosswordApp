@@ -19,7 +19,7 @@ class CellAdapter(val list: List<Cell>, val context: Context) :
 
     private val myList = list
 
-    //var highlightedPosition = 0
+    private val myContext = context
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(context).inflate(R.layout.cell_item, p0, false))
@@ -43,8 +43,16 @@ class CellAdapter(val list: List<Cell>, val context: Context) :
         }
 
         holder.layout.setOnClickListener{
+
             holder.layout.setBackgroundResource(R.drawable.green_border)
+
+            //remove previous highlight
+            //notifyDataSetChanged()
+
             //update highlighted position
+            if(myContext is PuzzleDisplayActivity){
+                myContext.removeHighlight(HighlightedPosition.position)
+            }
             HighlightedPosition.position = position
         }
     }
@@ -59,6 +67,7 @@ class CellAdapter(val list: List<Cell>, val context: Context) :
         val num = view.cellNumber
         val letter = view.cellLetter
         val layout = view.cellLayout
+
 
     }
 }
