@@ -46,12 +46,10 @@ class CellAdapter(val list: List<Cell>, val context: Context) :
 
             holder.layout.setBackgroundResource(R.drawable.green_border)
 
-            //remove previous highlight
-            //notifyDataSetChanged()
-
             //update highlighted position
             if(myContext is PuzzleDisplayActivity){
                 myContext.removeHighlight(HighlightedPosition.position)
+                myContext.highlightCells(position)
             }
             HighlightedPosition.position = position
         }

@@ -199,12 +199,30 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         //highlightCells(HighlightedPosition.position)
     }
 
+    //Remove the highlight from the previously chosen cell
    fun removeHighlight(position: Int){
 
         cellRecyclerView[position].setBackgroundResource(R.drawable.border)
 
     }
 
+   fun highlightCells(position: Int){
+       if(position != 14 && position != 29 && position != 44){
+
+           for (i in position + 1..position + 14) {
+               if (i == 14 || i == 29 || i == 44) {
+                   cellRecyclerView[i].setBackgroundResource(R.drawable.blue_border)
+                   break
+               } else {
+                   if (cellRecyclerView[i].cellLetter.text != ".") {
+                       cellRecyclerView[i].setBackgroundResource(R.drawable.blue_border)
+                   } else {
+                       break
+                   }
+               }
+           }
+       }
+   }
 
     //detect when letter is pushed, change current cell
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
