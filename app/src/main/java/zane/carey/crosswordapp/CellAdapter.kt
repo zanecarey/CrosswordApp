@@ -37,6 +37,8 @@ class CellAdapter(val list: List<Cell>, val context: Context) :
         if (myList[position].letter == ".") {
             holder.layout.setBackgroundColor(Color.BLACK)
             holder.layout.isClickable = false
+            holder.letter.isClickable = false
+            holder.num.isClickable = false
             holder.letter.text = myList[position].letter
         } else {
             holder.letter.text = myList[position].letter.toString()
@@ -48,8 +50,10 @@ class CellAdapter(val list: List<Cell>, val context: Context) :
 
             //update highlighted position
             if(myContext is PuzzleDisplayActivity){
-                myContext.removeHighlight(HighlightedPosition.position)
+                myContext.removeGreenHighlight(HighlightedPosition.position)
+                myContext.removeBlueHighlights()
                 myContext.highlightCells(position)
+
             }
             HighlightedPosition.position = position
         }

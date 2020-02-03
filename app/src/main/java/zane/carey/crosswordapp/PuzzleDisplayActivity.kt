@@ -46,8 +46,8 @@ var cluesDown: MutableList<String> = mutableListOf<String>()
 
 
 //current highlighted position value
-class HighlightedPosition{
-    companion object{
+class HighlightedPosition {
+    companion object {
         var position = 0
     }
 }
@@ -75,7 +75,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         //displayLayout = findViewById(R.id.display_layout)
 
 
-        if(intent.getStringExtra("puzzleType") == "random"){
+        if (intent.getStringExtra("puzzleType") == "random") {
             getRandomDate()
         } else {
             year = intent.getIntExtra("pickerValue", 2015).toString()
@@ -87,7 +87,6 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         getPuzzleData("2008", "11", "15")
 
 
-
     }
 
     private fun getRandomDate() {
@@ -95,14 +94,14 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         val monthVal = (1..12).shuffled().first()
         val dayVal = (1..30).shuffled().first()
 
-        if(monthVal < 10){
+        if (monthVal < 10) {
             month = monthVal.toString().padStart(2, '0')
         } else {
             month = monthVal.toString()
         }
 
-        if(dayVal < 10){
-            day = dayVal.toString().padStart(2,'0')
+        if (dayVal < 10) {
+            day = dayVal.toString().padStart(2, '0')
         } else {
             day = dayVal.toString()
         }
@@ -112,7 +111,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
     private fun getPuzzleData(year: String, month: String, day: String) {
         val job = CoroutineScope(Dispatchers.Main).launch {
-//            try{
+            //            try{
 //                val request = api.getPuzzle(year, month, day).await()
 //
 //            } catch ( ex: HttpException) {
@@ -157,17 +156,17 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkAnswer(){
+    private fun checkAnswer() {
         //check every cell that has a letter inputted and show whether it is correct or not
-        for(i in 0 until cellRecyclerView.size-1){
-            if(cellRecyclerView[i].cellLetter.text != "*" && cellRecyclerView[i].cellLetter.text != grid[i]){
+        for (i in 0 until cellRecyclerView.size - 1) {
+            if (cellRecyclerView[i].cellLetter.text != "*" && cellRecyclerView[i].cellLetter.text != grid[i]) {
                 cellRecyclerView[i].setBackgroundResource(R.drawable.red_border)
             }
         }
     }
 
     //display the puzzle information in a dialog
-    private fun displayInfo(){
+    private fun displayInfo() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Puzzle Information")
         val alertView = layoutInflater.inflate(R.layout.custom_info_display, null)
@@ -179,7 +178,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
         builder.setView(alertView)
 
-        builder.setPositiveButton("OK") {dialog, which ->
+        builder.setPositiveButton("OK") { dialog, which ->
 
         }
         builder.show()
@@ -188,8 +187,8 @@ class PuzzleDisplayActivity : AppCompatActivity() {
     }
 
     //flip the direction of the clue from horizontal to vertical and vice versa
-    private fun changeDirection(){
-        if(inputMode == "horizontal"){
+    private fun changeDirection() {
+        if (inputMode == "horizontal") {
             inputMode = "vertical"
         } else {
             inputMode = "horizontal"
@@ -200,30 +199,60 @@ class PuzzleDisplayActivity : AppCompatActivity() {
     }
 
     //Remove the highlight from the previously chosen cell
-   fun removeHighlight(position: Int){
+    fun removeGreenHighlight(position: Int) {
 
         cellRecyclerView[position].setBackgroundResource(R.drawable.border)
 
     }
 
-   fun highlightCells(position: Int){
-       if(position != 14 && position != 29 && position != 44){
+    fun highlightCells(position: Int) {
 
-           for (i in position + 1..position + 14) {
-               if (i == 14 || i == 29 || i == 44) {
-                   cellRecyclerView[i].setBackgroundResource(R.drawable.blue_border)
-                   break
-               } else {
-                   if (cellRecyclerView[i].cellLetter.text != ".") {
-                       cellRecyclerView[i].setBackgroundResource(R.drawable.blue_border)
-                   } else {
-                       break
-                   }
-               }
-           }
-       }
-   }
+        //Highlight cells to right of chosen cell with blue border
+        if (position != 14 && position != 29 && position != 44) {
 
+            for (i in position + 1..position + 14) {
+                if (i == 14 || i == 29 || i == 44) {
+                    cellRecyclerView[i].setBackgroundResource(R.drawable.blue_border)
+                    highlightedCellsList.add(i)
+                    break
+                } else {
+                    if (cellRecyclerView[i].cellLetter.text != ".") {
+                        cellRecyclerView[i].setBackgroundResource(R.drawable.blue_border)
+                        highlightedCellsList.add(i)
+                    } else {
+                        break
+                    }
+                }
+            }
+        }
+
+        //Highlight cells to left of chosen cell with blue border
+        if (position != 15 && position != 30 && position != 45) {
+
+            for (i in position - 1 downTo position - 14) {
+                if (i == 0 || i == 15 || i == 30 || i == 45) {
+                    cellRecyclerView[i].setBackgroundResource(R.drawable.blue_border)
+                    highlightedCellsList.add(i)
+                    break
+                } else {
+                    if (cellRecyclerView[i].cellLetter.text != ".") {
+                        cellRecyclerView[i].setBackgroundResource(R.drawable.blue_border)
+                        highlightedCellsList.add(i)
+                    } else {
+                        break
+                    }
+                }
+            }
+        }
+    }
+
+    fun removeBlueHighlights(){
+
+        for (i in 0 until highlightedCellsList.size) {
+            cellRecyclerView[highlightedCellsList[i]].cellLayout.setBackgroundResource(R.drawable.border)
+        }
+        highlightedCellsList.clear()
+    }
     //detect when letter is pushed, change current cell
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         return when (keyCode) {
