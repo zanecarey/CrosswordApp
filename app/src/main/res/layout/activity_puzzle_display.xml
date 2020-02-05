@@ -5,18 +5,23 @@
     android:id="@+id/display_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PuzzleDisplayActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".PuzzleDisplayActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/crosswordRecyclerView"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/myToolBar"
+        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="1dp">
 
@@ -28,4 +33,11 @@
             android:textSize="24sp" />
 
     </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/crosswordRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
 </LinearLayout>

@@ -32,6 +32,7 @@ var day = ""
 private lateinit var cellRecyclerView: RecyclerView
 private lateinit var displayLayout: ConstraintLayout
 private lateinit var clueTextView: TextView
+private var myMenu: Menu? = null
 
 //game grid variables
 var rows = 0
@@ -69,11 +70,13 @@ private var grid: List<String> = listOf("")
 private var cellList: MutableList<Cell> = mutableListOf<Cell>()
 
 
+
 class PuzzleDisplayActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_puzzle_display)
+        setSupportActionBar(findViewById(R.id.myToolBar))
 
         cellRecyclerView = findViewById(R.id.crosswordRecyclerView)
 
@@ -88,7 +91,6 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             month = "05"
             day = "05"
         }
-
 
         getPuzzleData("2008", "11", "15")
 
@@ -242,8 +244,11 @@ class PuzzleDisplayActivity : AppCompatActivity() {
     private fun changeDirection() {
         if (inputMode == "horizontal") {
             inputMode = "vertical"
+            myMenu?.findItem(R.id.action_change_direction)?.setIcon(R.drawable.ic_swap_horiz_white_48dp)
+
         } else {
             inputMode = "horizontal"
+            myMenu?.findItem(R.id.action_change_direction)?.setIcon(R.drawable.ic_swap_vert_black_48dp)
         }
     }
 
@@ -473,6 +478,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        myMenu = menu
         // Inflate the menu to use in the action bar
         val inflater = menuInflater
         inflater.inflate(R.menu.toolbar_menu, menu)
@@ -490,7 +496,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
                 displayInfo()
                 return true
             }
-            R.id.action_change_direction -> {
+            R.id.action_change_direction -> { supportActionBar
                 changeDirection()
                 return true
             }
