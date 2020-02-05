@@ -58,8 +58,10 @@ var highlightedCellsList: MutableList<Int> = mutableListOf<Int>()
 var inputMode: String = "horizontal"
 
 //first and last indexes of each row
-private var firstCells: List<Int> = listOf(0, 15, 30, 45, 60, 75, 90,105,120 ,135,150,165, 180, 195, 210)
-private var lastCells: List<Int> = listOf(14, 29, 44, 59, 74, 89, 104,119,134 ,149,164,179, 194, 209, 224)
+private var firstCells: List<Int> =
+    listOf(0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180, 195, 210)
+private var lastCells: List<Int> =
+    listOf(14, 29, 44, 59, 74, 89, 104, 119, 134, 149, 164, 179, 194, 209, 224)
 
 //arrays for our grid
 private var gridnums: List<Int> = listOf(0)
@@ -169,25 +171,50 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         }
     }
 
-    fun displayClue(position: Int){
-        var clueCount = 0
-        var blackCellStreak = true
-        for(i in 0 .. position){
+    fun displayClue(position: Int) {
+        if (inputMode == "horizontal") {
+            var clueCount = 0
+            var blackCellStreak = true
+            for (i in 0..position) {
 
-            if(cellRecyclerView[i].cellLetter.text == "."){
-                if(blackCellStreak){
+                if (cellRecyclerView[i].cellLetter.text == ".") {
+                    if (blackCellStreak) {
+                        clueCount++
+                        blackCellStreak = false
+                    }
+                } else if (lastCells.contains(i)) {
                     clueCount++
-                    blackCellStreak = false
+                    blackCellStreak = true
+                } else {
+                    blackCellStreak = true
                 }
-            } else if(lastCells.contains(i)){
-                clueCount++
-                blackCellStreak = true
-            } else {
-                blackCellStreak = true
+
+            }
+            clueTextView.text = cluesAcross[clueCount]
+        } else {
+            var vertClueCount = 0
+//            if(position <= 14){
+//                vertClueCount = Integer.parseInt(cellRecyclerView[position].cellNumber.text.toString()) - 1
+//            } else {
+//                for(i in 15 .. position){
+//                    if(cellRecyclerView[i-15].cellLetter.text == "."){
+//                        vertClueCount++
+//                    }
+//                }
+//            }
+            for (i in 1..position) {
+                //if(i <= 14 && cellRecyclerView[i].cellLetter.text != "."){
+                if (i <= 14) {
+                    if (cellRecyclerView[i].cellLetter.text != ".") {
+                        vertClueCount++
+                    }
+                } else if (cellRecyclerView[i].cellLetter.text != "." && cellRecyclerView[i - 15].cellLetter.text == ".") {
+                    vertClueCount++
+                }
             }
 
+            clueTextView.text = cluesDown[vertClueCount]
         }
-        clueTextView.text = cluesAcross[clueCount]
     }
 
     //display the puzzle information in a dialog
@@ -218,9 +245,6 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         } else {
             inputMode = "horizontal"
         }
-
-        //change highlighted cells properly
-        //highlightCells(HighlightedPosition.position)
     }
 
     //Remove the highlight from the previously chosen cell
@@ -234,7 +258,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
         //Highlight cells to right of chosen cell with blue border
         if (!lastCells.contains(position)) {
-        //if (position != 14 && position != 29 && position != 44) {
+            //if (position != 14 && position != 29 && position != 44) {
 
             for (i in position + 1..position + 14) {
                 if (lastCells.contains(i)) {
@@ -272,13 +296,14 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         }
     }
 
-    fun removeBlueHighlights(){
+    fun removeBlueHighlights() {
 
         for (i in 0 until highlightedCellsList.size) {
             cellRecyclerView[highlightedCellsList[i]].cellLayout.setBackgroundResource(R.drawable.border)
         }
         highlightedCellsList.clear()
     }
+
     //detect when letter is pushed, change current cell
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         return when (keyCode) {
