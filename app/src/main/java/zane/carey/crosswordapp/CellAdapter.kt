@@ -53,7 +53,7 @@ class CellAdapter(val list: List<Cell>, val context: Context) :
                 myContext.removeGreenHighlight(HighlightedPosition.position)
                 myContext.removeBlueHighlights()
                 myContext.highlightCells(position)
-
+                myContext.displayClue(position)
             }
             HighlightedPosition.position = position
         }

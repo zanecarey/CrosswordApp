@@ -57,6 +57,10 @@ var highlightedCellsList: MutableList<Int> = mutableListOf<Int>()
 //current input mode
 var inputMode: String = "horizontal"
 
+//first and last indexes of each row
+private var firstCells: List<Int> = listOf(0, 15, 30, 45, 60, 75, 90,105,120 ,135,150,165, 180, 195, 210)
+private var lastCells: List<Int> = listOf(14, 29, 44, 59, 74, 89, 104,119,134 ,149,164,179, 194, 209, 224)
+
 //arrays for our grid
 private var gridnums: List<Int> = listOf(0)
 private var grid: List<String> = listOf("")
@@ -165,6 +169,27 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         }
     }
 
+    fun displayClue(position: Int){
+        var clueCount = 0
+        var blackCellStreak = true
+        for(i in 0 .. position){
+
+            if(cellRecyclerView[i].cellLetter.text == "."){
+                if(blackCellStreak){
+                    clueCount++
+                    blackCellStreak = false
+                }
+            } else if(lastCells.contains(i)){
+                clueCount++
+                blackCellStreak = true
+            } else {
+                blackCellStreak = true
+            }
+
+        }
+        clueTextView.text = cluesAcross[clueCount]
+    }
+
     //display the puzzle information in a dialog
     private fun displayInfo() {
         val builder = AlertDialog.Builder(this)
@@ -208,10 +233,11 @@ class PuzzleDisplayActivity : AppCompatActivity() {
     fun highlightCells(position: Int) {
 
         //Highlight cells to right of chosen cell with blue border
-        if (position != 14 && position != 29 && position != 44) {
+        if (!lastCells.contains(position)) {
+        //if (position != 14 && position != 29 && position != 44) {
 
             for (i in position + 1..position + 14) {
-                if (i == 14 || i == 29 || i == 44) {
+                if (lastCells.contains(i)) {
                     cellRecyclerView[i].setBackgroundResource(R.drawable.blue_border)
                     highlightedCellsList.add(i)
                     break
@@ -227,10 +253,10 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         }
 
         //Highlight cells to left of chosen cell with blue border
-        if (position != 15 && position != 30 && position != 45) {
+        if (!firstCells.contains(position)) {
 
             for (i in position - 1 downTo position - 14) {
-                if (i == 0 || i == 15 || i == 30 || i == 45) {
+                if (firstCells.contains(i)) {
                     cellRecyclerView[i].setBackgroundResource(R.drawable.blue_border)
                     highlightedCellsList.add(i)
                     break
