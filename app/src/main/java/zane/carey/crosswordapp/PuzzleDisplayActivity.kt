@@ -194,29 +194,33 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             }
             clueTextView.text = cluesAcross[clueCount]
         } else {
-            var vertClueCount = 0
-//            if(position <= 14){
-//                vertClueCount = Integer.parseInt(cellRecyclerView[position].cellNumber.text.toString()) - 1
-//            } else {
-//                for(i in 15 .. position){
-//                    if(cellRecyclerView[i-15].cellLetter.text == "."){
-//                        vertClueCount++
-//                    }
-//                }
-//            }
-            for (i in 1..position) {
-                //if(i <= 14 && cellRecyclerView[i].cellLetter.text != "."){
-                if (i <= 14) {
-                    if (cellRecyclerView[i].cellLetter.text != ".") {
-                        vertClueCount++
-                    }
-                } else if (cellRecyclerView[i].cellLetter.text != "." && cellRecyclerView[i - 15].cellLetter.text == ".") {
-                    vertClueCount++
-                }
-            }
+            var newPosition = position
+            var vertClueCount: Int
 
+                while(cellRecyclerView[newPosition].cellLetter.text!= "." && newPosition > 14){
+
+                    newPosition -= 15
+                }
+
+
+
+            vertClueCount = verticalClueDisplay(newPosition)
             clueTextView.text = cluesDown[vertClueCount]
         }
+    }
+
+    private fun verticalClueDisplay(position: Int) : Int{
+        var vertClueCount = 0
+        for (i in 1..position) {
+            if (i <= 14) {
+                if (cellRecyclerView[i].cellLetter.text != ".") {
+                    vertClueCount++
+                }
+            } else if (cellRecyclerView[i].cellLetter.text != "." && cellRecyclerView[i - 15].cellLetter.text == ".") {
+                vertClueCount++
+            }
+        }
+        return vertClueCount
     }
 
     //display the puzzle information in a dialog
@@ -261,41 +265,63 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
     fun highlightCells(position: Int) {
 
-        //Highlight cells to right of chosen cell with blue border
-        if (!lastCells.contains(position)) {
-            //if (position != 14 && position != 29 && position != 44) {
+        if(inputMode == "horizontal"){
+            //Highlight cells to right of chosen cell with blue border
+            if (!lastCells.contains(position)) {
 
-            for (i in position + 1..position + 14) {
-                if (lastCells.contains(i)) {
-                    cellRecyclerView[i].setBackgroundResource(R.drawable.blue_border)
-                    highlightedCellsList.add(i)
-                    break
-                } else {
-                    if (cellRecyclerView[i].cellLetter.text != ".") {
+                for (i in position + 1..position + 14) {
+                    if (lastCells.contains(i)) {
                         cellRecyclerView[i].setBackgroundResource(R.drawable.blue_border)
                         highlightedCellsList.add(i)
-                    } else {
                         break
+                    } else {
+                        if (cellRecyclerView[i].cellLetter.text != ".") {
+                            cellRecyclerView[i].setBackgroundResource(R.drawable.blue_border)
+                            highlightedCellsList.add(i)
+                        } else {
+                            break
+                        }
                     }
                 }
             }
-        }
 
-        //Highlight cells to left of chosen cell with blue border
-        if (!firstCells.contains(position)) {
+            //Highlight cells to left of chosen cell with blue border
+            if (!firstCells.contains(position)) {
 
-            for (i in position - 1 downTo position - 14) {
-                if (firstCells.contains(i)) {
-                    cellRecyclerView[i].setBackgroundResource(R.drawable.blue_border)
-                    highlightedCellsList.add(i)
-                    break
-                } else {
-                    if (cellRecyclerView[i].cellLetter.text != ".") {
+                for (i in position - 1 downTo position - 14) {
+                    if (firstCells.contains(i)) {
                         cellRecyclerView[i].setBackgroundResource(R.drawable.blue_border)
                         highlightedCellsList.add(i)
-                    } else {
                         break
+                    } else {
+                        if (cellRecyclerView[i].cellLetter.text != ".") {
+                            cellRecyclerView[i].setBackgroundResource(R.drawable.blue_border)
+                            highlightedCellsList.add(i)
+                        } else {
+                            break
+                        }
                     }
+                }
+            }
+        } else {
+            var positionUpward = position
+            var positionDownward = position
+            while(positionUpward - 15 >= 0){
+                positionUpward -= 15
+                if(cellRecyclerView[positionUpward].cellLetter.text != "."){
+                    cellRecyclerView[positionUpward].setBackgroundResource(R.drawable.blue_border)
+                    highlightedCellsList.add(positionUpward)
+                } else {
+                    break
+                }
+            }
+            while(positionDownward + 15 < cellRecyclerView.size){
+                positionDownward += 15
+                if (cellRecyclerView[positionDownward].cellLetter.text != ".") {
+                    cellRecyclerView[positionDownward].setBackgroundResource(R.drawable.blue_border)
+                    highlightedCellsList.add(positionDownward)
+                } else {
+                    break
                 }
             }
         }
