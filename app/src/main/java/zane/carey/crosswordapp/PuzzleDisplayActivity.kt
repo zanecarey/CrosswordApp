@@ -192,19 +192,24 @@ class PuzzleDisplayActivity : AppCompatActivity() {
                 }
 
             }
+            if(lastCells.contains(position)){
+                clueCount--
+            }
             clueTextView.text = cluesAcross[clueCount]
         } else {
             var newPosition = position
-            var vertClueCount: Int
 
-                while(cellRecyclerView[newPosition].cellLetter.text!= "." && newPosition > 14){
+                while(cellRecyclerView[newPosition].cellLetter.text != "." && newPosition > 14){
 
-                    newPosition -= 15
+                    if(cellRecyclerView[newPosition - 15].cellLetter.text != "."){
+                        newPosition -= 15
+                    } else {
+                        break
+                    }
+
                 }
 
-
-
-            vertClueCount = verticalClueDisplay(newPosition)
+            val vertClueCount = verticalClueDisplay(newPosition)
             clueTextView.text = cluesDown[vertClueCount]
         }
     }

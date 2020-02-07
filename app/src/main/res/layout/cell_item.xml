@@ -3,7 +3,6 @@
     android:id="@+id/cellLayout"
     android:layout_width="20dp"
     android:layout_height="20dp"
-    android:layout_margin="1dp"
     android:background="@drawable/border"
     android:orientation="vertical">
 
