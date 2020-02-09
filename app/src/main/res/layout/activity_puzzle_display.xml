@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".PuzzleDisplayActivity">
+    tools:context=".PuzzleDisplayActivity"
+    android:background="@color/colorPrimaryDark">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/myToolBar"
@@ -23,21 +24,29 @@
         android:id="@+id/cardView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp">
+        android:layout_marginBottom="1dp"
+        android:layout_margin="4dp">
 
         <TextView
             android:id="@+id/clue_TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:layout_margin="4dp"/>
 
     </androidx.cardview.widget.CardView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/crosswordRecyclerView"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/crosswordRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"/>
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>
