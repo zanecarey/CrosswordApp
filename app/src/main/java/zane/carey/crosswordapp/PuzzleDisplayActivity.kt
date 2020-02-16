@@ -259,6 +259,10 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             inputMode = "horizontal"
             myMenu?.findItem(R.id.action_change_direction)?.setIcon(R.drawable.ic_swap_vert_black_48dp)
         }
+        removeGreenHighlight(HighlightedPosition.position)
+        removeBlueHighlights()
+        highlightCells(HighlightedPosition.position)
+        displayClue(HighlightedPosition.position)
     }
 
     //Remove the highlight from the previously chosen cell
@@ -269,6 +273,8 @@ class PuzzleDisplayActivity : AppCompatActivity() {
     }
 
     fun highlightCells(position: Int) {
+
+        cellRecyclerView[position].setBackgroundResource(R.drawable.green_border)
 
         if(inputMode == "horizontal"){
             //Highlight cells to right of chosen cell with blue border
