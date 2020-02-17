@@ -11,6 +11,7 @@ import android.widget.GridView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.get
 import androidx.core.view.size
@@ -69,7 +70,9 @@ private var gridnums: List<Int> = listOf(0)
 private var grid: List<String> = listOf("")
 private var cellList: MutableList<Cell> = mutableListOf<Cell>()
 
-
+//letter card views
+private lateinit var cvA: CardView
+private lateinit var cvB: CardView
 
 class PuzzleDisplayActivity : AppCompatActivity() {
 
@@ -82,7 +85,8 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
         clueTextView = findViewById(R.id.clue_TextView)
         //displayLayout = findViewById(R.id.display_layout)
-
+        cvA = findViewById(R.id.cardViewA)
+        cvB = findViewById(R.id.cardViewB)
 
         if (intent.getStringExtra("puzzleType") == "random") {
             getRandomDate()
@@ -95,6 +99,14 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         getPuzzleData("2008", "11", "15")
 
 
+        cvA.setOnClickListener{
+            cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
+            cellRecyclerView[HighlightedPosition.position].cellLetter.text = "A"
+        }
+        cvB.setOnClickListener{
+            cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
+            cellRecyclerView[HighlightedPosition.position].cellLetter.text = "B"
+        }
     }
 
     private fun getRandomDate() {
