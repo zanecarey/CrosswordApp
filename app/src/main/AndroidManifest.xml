@@ -20,7 +20,7 @@
         </activity>
         <activity
             android:name=".PuzzleDisplayActivity"
-            android:windowSoftInputMode="stateAlwaysVisible"></activity>
+            android:windowSoftInputMode="stateHidden"></activity>
         <activity android:name=".MainActivity">
 
         </activity>

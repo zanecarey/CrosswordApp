@@ -31,9 +31,9 @@
             android:id="@+id/clue_TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="4dp"
             android:textColor="@android:color/black"
-            android:textSize="24sp"
-            android:layout_margin="4dp"/>
+            android:textSize="14sp" />
 
     </androidx.cardview.widget.CardView>
 
@@ -50,9 +50,10 @@
     </androidx.cardview.widget.CardView>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_gravity="center">
 
         <androidx.cardview.widget.CardView
             android:layout_width="40dp"
@@ -64,6 +65,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="A"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 
@@ -79,6 +82,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="B"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 
@@ -93,6 +98,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="C"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 
@@ -108,6 +115,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="D"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 
@@ -123,6 +132,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="E"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 
@@ -138,6 +149,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="F"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 
@@ -153,6 +166,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="G"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 
@@ -162,9 +177,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_gravity="center">
 
 
         <androidx.cardview.widget.CardView
@@ -177,6 +193,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="H"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 
@@ -192,6 +210,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="I"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 
@@ -207,6 +227,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="J"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 
@@ -221,6 +243,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="K"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 
@@ -236,6 +260,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="L"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 
@@ -251,6 +277,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="M"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 
@@ -266,6 +294,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="N"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 
@@ -277,9 +307,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_gravity="center">
 
         <androidx.cardview.widget.CardView
             android:layout_width="40dp"
@@ -291,6 +322,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="O"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 
@@ -306,6 +339,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="P"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 
@@ -321,6 +356,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Q"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 
@@ -336,6 +373,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="R"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 
@@ -350,6 +389,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="S"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 
@@ -365,6 +406,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="T"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 
@@ -380,6 +423,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="U"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 
@@ -391,9 +436,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_gravity="center">
 
 
         <androidx.cardview.widget.CardView
@@ -406,6 +452,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="V"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 
@@ -421,6 +469,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="W"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 
@@ -436,6 +486,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="X"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 
@@ -451,6 +503,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Y"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 
@@ -466,6 +520,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Z"
+                android:layout_gravity="center"
+                android:textColor="#000"
                 />
 
 

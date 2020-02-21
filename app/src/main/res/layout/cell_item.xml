@@ -13,7 +13,7 @@
         android:layout_marginStart="2dp"
         android:text="1"
         android:textColor="#000"
-        android:textSize="8sp" />
+        android:textSize="6sp" />
 
     <TextView
         android:id="@+id/cellLetter"
@@ -23,5 +23,6 @@
         android:text="*"
         android:textColor="#000"
         android:textSize="8sp"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        android:textStyle="bold"/>
 </LinearLayout>
