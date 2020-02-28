@@ -20,12 +20,6 @@ class RestApi {
     }
 
     fun getPuzzle(year: String, month: String, day: String): Deferred<Results> {
-        //return puzzleApi.getPuzzle(format)
         return puzzleApi.getData(year,month,day)
     }
-
-//    fun getPuzzle(): Deferred<Results> {
-//        //return puzzleApi.getPuzzle(format)
-//        return puzzleApi.getData()
-//    }
 }
