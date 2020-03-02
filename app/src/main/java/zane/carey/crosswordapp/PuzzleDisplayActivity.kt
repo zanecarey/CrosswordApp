@@ -116,7 +116,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         cvD = findViewById(R.id.cardViewD)
         cvE = findViewById(R.id.cardViewE)
         cvF = findViewById(R.id.cardViewF)
-        cvG= findViewById(R.id.cardViewG)
+        cvG = findViewById(R.id.cardViewG)
         cvH = findViewById(R.id.cardViewH)
         cvI = findViewById(R.id.cardViewI)
         cvJ = findViewById(R.id.cardViewJ)
@@ -134,7 +134,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         cvV = findViewById(R.id.cardViewV)
         cvW = findViewById(R.id.cardViewW)
         cvX = findViewById(R.id.cardViewX)
-        cvY= findViewById(R.id.cardViewY)
+        cvY = findViewById(R.id.cardViewY)
         cvZ = findViewById(R.id.cardViewZ)
 
         if (intent.getStringExtra("puzzleType") == "random") {
@@ -145,111 +145,112 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             day = "05"
         }
 
-        getPuzzleData("2011", "11", "15")
+        //getPuzzleData("2011", "11", "15")
+        getPuzzleData(year, month, day)
 
 
         //Letter box listeners
-        cvA.setOnClickListener{
+        cvA.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "A"
         }
-        cvB.setOnClickListener{
+        cvB.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "B"
         }
-        cvC.setOnClickListener{
+        cvC.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "C"
         }
-        cvD.setOnClickListener{
+        cvD.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "D"
         }
-        cvE.setOnClickListener{
+        cvE.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "E"
         }
-        cvF.setOnClickListener{
+        cvF.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "F"
         }
-        cvG.setOnClickListener{
+        cvG.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "G"
         }
-        cvH.setOnClickListener{
+        cvH.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "H"
         }
-        cvI.setOnClickListener{
+        cvI.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "I"
         }
-        cvJ.setOnClickListener{
+        cvJ.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "J"
         }
-        cvK.setOnClickListener{
+        cvK.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "K"
         }
-        cvL.setOnClickListener{
+        cvL.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "L"
         }
-        cvM.setOnClickListener{
+        cvM.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "M"
         }
-        cvN.setOnClickListener{
+        cvN.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "N"
         }
-        cvO.setOnClickListener{
+        cvO.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "O"
         }
-        cvP.setOnClickListener{
+        cvP.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "P"
         }
-        cvQ.setOnClickListener{
+        cvQ.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "Q"
         }
-        cvR.setOnClickListener{
+        cvR.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "R"
         }
-        cvS.setOnClickListener{
+        cvS.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "S"
         }
-        cvT.setOnClickListener{
+        cvT.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "T"
         }
-        cvU.setOnClickListener{
+        cvU.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "U"
         }
-        cvV.setOnClickListener{
+        cvV.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "V"
         }
-        cvW.setOnClickListener{
+        cvW.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "W"
         }
-        cvX.setOnClickListener{
+        cvX.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "X"
         }
-        cvY.setOnClickListener{
+        cvY.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "Y"
         }
-        cvZ.setOnClickListener{
+        cvZ.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "Z"
         }
@@ -309,22 +310,16 @@ class PuzzleDisplayActivity : AppCompatActivity() {
                 cellRecyclerView.layoutManager =
                     GridLayoutManager(this@PuzzleDisplayActivity, 15)
 
+                //update ui info
+                withContext(Dispatchers.Main) {
+
+                    clueTextView.text = request.clues.across[0]
+                    clueTextView.text = errorCode.toString()
+                }
+
             } catch (ex: HttpException) {
-
-               errorCode = ex.code()
-            }
-            //val request = api.getPuzzle(year, month, day).await()
-
-
-
-
-
-
-            //update ui info
-            withContext(Dispatchers.Main) {
-
-                //clueTextView.text = request.clues.across[0]
-                clueTextView.text = errorCode.toString()
+                getRandomDate()
+                getPuzzleData(year, month, day)
             }
         }
     }
@@ -358,29 +353,29 @@ class PuzzleDisplayActivity : AppCompatActivity() {
                 }
 
             }
-            if(lastCells.contains(position)){
+            if (lastCells.contains(position)) {
                 clueCount--
             }
             clueTextView.text = cluesAcross[clueCount]
         } else {
             var newPosition = position
 
-                while(cellRecyclerView[newPosition].cellLetter.text != "." && newPosition > 14){
+            while (cellRecyclerView[newPosition].cellLetter.text != "." && newPosition > 14) {
 
-                    if(cellRecyclerView[newPosition - 15].cellLetter.text != "."){
-                        newPosition -= 15
-                    } else {
-                        break
-                    }
-
+                if (cellRecyclerView[newPosition - 15].cellLetter.text != ".") {
+                    newPosition -= 15
+                } else {
+                    break
                 }
+
+            }
 
             val vertClueCount = verticalClueDisplay(newPosition)
             clueTextView.text = cluesDown[vertClueCount]
         }
     }
 
-    private fun verticalClueDisplay(position: Int) : Int{
+    private fun verticalClueDisplay(position: Int): Int {
         var vertClueCount = 0
         for (i in 1..position) {
             if (i <= 14) {
@@ -419,11 +414,13 @@ class PuzzleDisplayActivity : AppCompatActivity() {
     private fun changeDirection() {
         if (inputMode == "horizontal") {
             inputMode = "vertical"
-            myMenu?.findItem(R.id.action_change_direction)?.setIcon(R.drawable.ic_swap_horiz_white_48dp)
+            myMenu?.findItem(R.id.action_change_direction)
+                ?.setIcon(R.drawable.ic_swap_horiz_white_48dp)
 
         } else {
             inputMode = "horizontal"
-            myMenu?.findItem(R.id.action_change_direction)?.setIcon(R.drawable.ic_swap_vert_black_48dp)
+            myMenu?.findItem(R.id.action_change_direction)
+                ?.setIcon(R.drawable.ic_swap_vert_black_48dp)
         }
         removeGreenHighlight(HighlightedPosition.position)
         removeBlueHighlights()
@@ -442,7 +439,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
         cellRecyclerView[position].setBackgroundResource(R.drawable.green_border)
 
-        if(inputMode == "horizontal"){
+        if (inputMode == "horizontal") {
             //Highlight cells to right of chosen cell with blue border
             if (!lastCells.contains(position)) {
 
@@ -483,16 +480,16 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         } else {
             var positionUpward = position
             var positionDownward = position
-            while(positionUpward - 15 >= 0){
+            while (positionUpward - 15 >= 0) {
                 positionUpward -= 15
-                if(cellRecyclerView[positionUpward].cellLetter.text != "."){
+                if (cellRecyclerView[positionUpward].cellLetter.text != ".") {
                     cellRecyclerView[positionUpward].setBackgroundResource(R.drawable.blue_border)
                     highlightedCellsList.add(positionUpward)
                 } else {
                     break
                 }
             }
-            while(positionDownward + 15 < cellRecyclerView.size){
+            while (positionDownward + 15 < cellRecyclerView.size) {
                 positionDownward += 15
                 if (cellRecyclerView[positionDownward].cellLetter.text != ".") {
                     cellRecyclerView[positionDownward].setBackgroundResource(R.drawable.blue_border)
@@ -531,7 +528,8 @@ class PuzzleDisplayActivity : AppCompatActivity() {
                 displayInfo()
                 return true
             }
-            R.id.action_change_direction -> { supportActionBar
+            R.id.action_change_direction -> {
+                supportActionBar
                 changeDirection()
                 return true
             }
