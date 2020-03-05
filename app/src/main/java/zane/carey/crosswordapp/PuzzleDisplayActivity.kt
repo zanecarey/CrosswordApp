@@ -138,15 +138,15 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         cvZ = findViewById(R.id.cardViewZ)
 
         if (intent.getStringExtra("puzzleType") == "random") {
-            getRandomDate()
+            //getRandomDate()
         } else {
             year = intent.getIntExtra("pickerValue", 2015).toString()
             month = "05"
             day = "05"
         }
 
-        //getPuzzleData("2011", "11", "15")
-        getPuzzleData(year, month, day)
+        getPuzzleData("1978", "11", "04")
+        //getPuzzleData(year, month, day)
 
 
         //Letter box listeners
@@ -256,29 +256,32 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         }
     }
 
+    private fun getRandomYear(): String {
+        return (1976..2017).shuffled().first().toString()
+    }
 
-    private fun getRandomDate() {
-        val yearVal = (1976..2017).shuffled().first()
+    private fun getRandomMonth(): String {
         val monthVal = (1..12).shuffled().first()
-        val dayVal = (1..30).shuffled().first()
 
-        if (monthVal < 10) {
+        if(monthVal < 10) {
             month = monthVal.toString().padStart(2, '0')
         } else {
             month = monthVal.toString()
         }
+        return month
+    }
 
+    private fun getRandomDay(): String {
+        val dayVal = (1..30).shuffled().first()
         if (dayVal < 10) {
             day = dayVal.toString().padStart(2, '0')
         } else {
             day = dayVal.toString()
         }
-
-        year = yearVal.toString()
+        return day
     }
 
     private fun getPuzzleData(year: String, month: String, day: String) {
-        var errorCode = 0
         val job = CoroutineScope(Dispatchers.Main).launch {
             try {
                 val request = api.getPuzzle(year, month, day).await()
@@ -314,12 +317,17 @@ class PuzzleDisplayActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
 
                     clueTextView.text = request.clues.across[0]
-                    clueTextView.text = errorCode.toString()
                 }
 
             } catch (ex: HttpException) {
-                getRandomDate()
-                getPuzzleData(year, month, day)
+
+                //update ui info
+                withContext(Dispatchers.Main) {
+
+                    //getPuzzleData("2008", "11", "15")
+                    getPuzzleData(getRandomYear(), getRandomMonth(), getRandomDay())
+                    //clueTextView.text = ex.code().toString()
+                }
             }
         }
     }
