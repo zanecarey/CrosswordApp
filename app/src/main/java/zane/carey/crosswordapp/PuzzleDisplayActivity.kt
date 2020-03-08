@@ -145,7 +145,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             day = "05"
         }
 
-        getPuzzleData("1978", "11", "04")
+        getPuzzleData("1982", "05", "09")
         //getPuzzleData(year, month, day)
 
 
@@ -288,6 +288,11 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
                 rows = request.size.rows
                 cols = request.size.cols
+
+                if(rows != 15 || cols != 15){
+                    getPuzzleData(getRandomYear(), getRandomMonth(), getRandomDay())
+                    return@launch
+                }
 
                 date = request.date
                 author = request.author
