@@ -11,12 +11,12 @@
         android:id="@+id/cardView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:layout_marginBottom="171dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="70dp"
         app:cardBackgroundColor="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toTopOf="@+id/randomCardView"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -29,43 +29,34 @@
             android:textSize="48sp" />
     </androidx.cardview.widget.CardView>
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="62dp"
+        android:src="@drawable/ic_gradient_black_72dp"
+        app:layout_constraintBottom_toTopOf="@+id/randomCardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/randomCardView"
         android:layout_width="120dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="48dp"
-        app:cardBackgroundColor="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toTopOf="@+id/chooseCardView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Random"
-            android:textSize="24sp">
-
-        </TextView>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/chooseCardView"
-        android:layout_width="120dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="172dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="146dp"
         app:cardBackgroundColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/randomCardView">
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Choose"
+            android:text="Start"
             android:textSize="24sp">
 
         </TextView>

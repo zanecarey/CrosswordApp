@@ -153,109 +153,154 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         cvA.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "A"
+            updateInputPosition()
         }
         cvB.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "B"
+            updateInputPosition()
         }
         cvC.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "C"
+            updateInputPosition()
         }
         cvD.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "D"
+            updateInputPosition()
         }
         cvE.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "E"
+            updateInputPosition()
         }
         cvF.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "F"
+            updateInputPosition()
         }
         cvG.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "G"
+            updateInputPosition()
         }
         cvH.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "H"
+            updateInputPosition()
         }
         cvI.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "I"
+            updateInputPosition()
         }
         cvJ.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "J"
+            updateInputPosition()
         }
         cvK.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "K"
+            updateInputPosition()
         }
         cvL.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "L"
+            updateInputPosition()
         }
         cvM.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "M"
+            updateInputPosition()
         }
         cvN.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "N"
+            updateInputPosition()
         }
         cvO.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "O"
+            updateInputPosition()
         }
         cvP.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "P"
+            updateInputPosition()
         }
         cvQ.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "Q"
+            updateInputPosition()
+
         }
         cvR.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "R"
+            updateInputPosition()
+
         }
         cvS.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "S"
+            updateInputPosition()
+
         }
         cvT.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "T"
+            updateInputPosition()
+
         }
         cvU.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "U"
+            updateInputPosition()
+
         }
         cvV.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "V"
+            updateInputPosition()
+
         }
         cvW.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "W"
+            updateInputPosition()
+
         }
         cvX.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "X"
+            updateInputPosition()
+
         }
         cvY.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "Y"
+            updateInputPosition()
+
         }
         cvZ.setOnClickListener {
             cellRecyclerView[HighlightedPosition.position].cellLetter.visibility = View.VISIBLE
             cellRecyclerView[HighlightedPosition.position].cellLetter.text = "Z"
+            updateInputPosition()
+
         }
     }
 
+    private fun updateInputPosition(){
+        if(inputMode == "horizontal" && highlightedCellsList.contains(HighlightedPosition.position + 1)){
+            HighlightedPosition.position++
+            highlightCells(HighlightedPosition.position)
+        } else if(highlightedCellsList.contains(HighlightedPosition.position + 15)){
+            HighlightedPosition.position += 15
+            highlightCells(HighlightedPosition.position)
+        }
+    }
     private fun getRandomYear(): String {
         return (1976..2017).shuffled().first().toString()
     }
