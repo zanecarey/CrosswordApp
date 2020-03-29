@@ -2,6 +2,7 @@ package zane.carey.crosswordapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
@@ -33,6 +34,7 @@ var day = ""
 private lateinit var cellRecyclerView: RecyclerView
 private lateinit var displayLayout: ConstraintLayout
 private lateinit var clueTextView: TextView
+private lateinit var timerTextView: TextView
 private var myMenu: Menu? = null
 
 //game grid variables
@@ -110,6 +112,9 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
         clueTextView = findViewById(R.id.clue_TextView)
         //displayLayout = findViewById(R.id.display_layout)
+
+        timerTextView = findViewById(R.id.timerTextView)
+
         cvA = findViewById(R.id.cardViewA)
         cvB = findViewById(R.id.cardViewB)
         cvC = findViewById(R.id.cardViewC)
@@ -290,7 +295,16 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             updateInputPosition()
 
         }
+        val timer = object: CountDownTimer(20000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                timerTextView.text = millisUntilFinished.toString()
+            }
 
+            override fun onFinish() {
+                Toast.makeText(this@PuzzleDisplayActivity, "Game Over!", Toast.LENGTH_LONG).show()
+            }
+        }
+        timer.start()
     }
 
     private fun updateInputPosition(){
