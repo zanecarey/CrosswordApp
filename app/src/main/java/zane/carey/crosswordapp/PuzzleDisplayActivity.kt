@@ -290,6 +290,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             updateInputPosition()
 
         }
+
     }
 
     private fun updateInputPosition(){
@@ -593,5 +594,15 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Exit Game?")
+        builder.setPositiveButton("Ok") { dialog, which ->
+            super.onBackPressed()
+        }
+        val dialog = builder.create()
+        dialog.show()
     }
 }
