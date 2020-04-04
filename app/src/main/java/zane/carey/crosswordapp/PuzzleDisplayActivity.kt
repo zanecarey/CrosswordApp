@@ -16,6 +16,7 @@ import androidx.core.view.size
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.RoomDatabase
 import kotlinx.android.synthetic.main.cell_item.view.*
 import kotlinx.android.synthetic.main.custom_info_display.view.*
 import kotlinx.coroutines.CoroutineScope
@@ -33,6 +34,7 @@ private lateinit var displayLayout: ConstraintLayout
 private lateinit var clueTextView: TextView
 private lateinit var timerTextView: TextView
 private lateinit var chronometer: Chronometer
+private lateinit var dbTV: TextView
 private var myMenu: Menu? = null
 
 //game grid variables
@@ -113,6 +115,9 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
         //timerTextView = findViewById(R.id.timerTextView)
         chronometer = findViewById(R.id.chronometer1)
+
+        dbTV = findViewById(R.id.dbTV)
+
         cvA = findViewById(R.id.cardViewA)
         cvB = findViewById(R.id.cardViewB)
         cvC = findViewById(R.id.cardViewC)
@@ -295,6 +300,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         }
 
         chronometer.start()
+
     }
 
     private fun updateInputPosition(){
@@ -609,4 +615,6 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         val dialog = builder.create()
         dialog.show()
     }
+
+
 }

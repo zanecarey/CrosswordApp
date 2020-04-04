@@ -26,7 +26,7 @@ abstract class PuzzleRoomDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     PuzzleRoomDatabase::class.java,
-                    "word_database"
+                    "puzzle_database"
                 )
                     .fallbackToDestructiveMigration()
                     .addCallback(PuzzleDatabaseCallback(scope))
@@ -35,18 +35,19 @@ abstract class PuzzleRoomDatabase : RoomDatabase() {
                 instance
             }
         }
-    }
 
-    private class PuzzleDatabaseCallback(
-        private val scope: CoroutineScope
-    ) : RoomDatabase.Callback() {
-        override fun onOpen(db: SupportSQLiteDatabase) {
-            super.onOpen(db)
-            // If you want to keep the data through app restarts,
-            // comment out the following line.
-            INSTANCE?.let { database ->
-                scope.launch(Dispatchers.IO) {
-                    populateDatabase(database.puzzleDao())
+
+        private class PuzzleDatabaseCallback(
+            private val scope: CoroutineScope
+        ) : RoomDatabase.Callback() {
+            override fun onOpen(db: SupportSQLiteDatabase) {
+                super.onOpen(db)
+                // If you want to keep the data through app restarts,
+                // comment out the following line.
+                INSTANCE?.let { database ->
+                    scope.launch(Dispatchers.IO) {
+                        populateDatabase(database.puzzleDao())
+                    }
                 }
             }
         }
