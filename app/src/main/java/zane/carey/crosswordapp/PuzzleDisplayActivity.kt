@@ -13,6 +13,8 @@ import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.get
 import androidx.core.view.size
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -101,6 +103,8 @@ private lateinit var cvY: CardView
 private lateinit var cvZ: CardView
 
 
+private lateinit var puzzleViewModel: PuzzleViewModel
+
 class PuzzleDisplayActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -115,6 +119,11 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
         //timerTextView = findViewById(R.id.timerTextView)
         chronometer = findViewById(R.id.chronometer1)
+
+        puzzleViewModel = ViewModelProvider(this).get(PuzzleViewModel::class.java)
+        puzzleViewModel.allPuzzles.observe(this, Observer { puzzles ->
+            puzzles?.let { dbTV.text = puzzles[0].puzzle}
+        })
 
         dbTV = findViewById(R.id.dbTV)
 
