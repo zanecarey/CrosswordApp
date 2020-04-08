@@ -18,14 +18,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import androidx.room.RoomDatabase
 import kotlinx.android.synthetic.main.cell_item.view.*
 import kotlinx.android.synthetic.main.custom_info_display.view.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import retrofit2.HttpException
+import kotlin.random.Random
 
 var year = ""
 var month = ""
@@ -36,7 +35,6 @@ private lateinit var displayLayout: ConstraintLayout
 private lateinit var clueTextView: TextView
 private lateinit var timerTextView: TextView
 private lateinit var chronometer: Chronometer
-private lateinit var dbTV: TextView
 private var myMenu: Menu? = null
 
 //game grid variables
@@ -121,11 +119,11 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         chronometer = findViewById(R.id.chronometer1)
 
         puzzleViewModel = ViewModelProvider(this).get(PuzzleViewModel::class.java)
-        puzzleViewModel.allPuzzles.observe(this, Observer { puzzles ->
-            puzzles?.let { dbTV.text = puzzles[0].puzzle}
-        })
+//        puzzleViewModel.allPuzzles.observe(this, Observer { puzzles ->
+////            puzzles?.let { dbTV.text = puzzles[Random.nextInt(0, puzzles.size-1)].puzzle}
+//        })
 
-        dbTV = findViewById(R.id.dbTV)
+        //dbTV = findViewById(R.id.dbTV)
 
         cvA = findViewById(R.id.cardViewA)
         cvB = findViewById(R.id.cardViewB)
@@ -155,14 +153,21 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         cvZ = findViewById(R.id.cardViewZ)
 
         if (intent.getStringExtra("puzzleType") == "random") {
-            //getRandomDate()
+            getPuzzleData(getRandomYear(), getRandomMonth(), getRandomDay())
         } else {
-            year = intent.getIntExtra("pickerValue", 2015).toString()
-            month = "05"
-            day = "05"
+            val db = PuzzleRoomDatabase.getDatabase(applicationContext)
+
+            //db.puzzleDao().deleteAll()
+            val puzzles = db.puzzleDao().getPuzzle()
+            val list = puzzles.value
+            val year = list?.get(0).toString().substring(0,3)
+//            val month = list?.get(0).toString().substring(4,5)
+           // val day = list?.get(0).toString().substring(6,7)
+            //getPuzzleData(year, month, day)
+            getPuzzleData(year, "05", "09")
         }
 
-        getPuzzleData("1982", "05", "09")
+        //getPuzzleData("1982", "05", "09")
         //getPuzzleData(year, month, day)
 
 
@@ -322,7 +327,8 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         }
     }
     private fun getRandomYear(): String {
-        return (1976..2017).shuffled().first().toString()
+        year = (1976..2017).shuffled().first().toString()
+        return year
     }
 
     private fun getRandomMonth(): String {
@@ -611,6 +617,10 @@ class PuzzleDisplayActivity : AppCompatActivity() {
                 changeDirection()
                 return true
             }
+            R.id.action_save_game -> {
+                saveGame()
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -625,5 +635,12 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    //save the game to room db
+    fun saveGame(){
 
+        //PuzzleRoomDatabase.getDatabase(applicationContext, )
+        val db = PuzzleRoomDatabase.getDatabase(applicationContext)
+
+        db.puzzleDao().insert(Puzzle(year + month + day))
+    }
 }

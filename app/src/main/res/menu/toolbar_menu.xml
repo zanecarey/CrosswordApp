@@ -22,4 +22,11 @@
         app:showAsAction="ifRoom|withText"
         android:icon="@drawable/ic_info_outline_black_48dp"
         />
+
+    <item
+        android:id="@+id/action_save_game"
+        android:title="Save"
+        app:showAsAction="ifRoom|withText"
+        android:icon="@drawable/ic_save_white_24dp"
+        />
 </menu>

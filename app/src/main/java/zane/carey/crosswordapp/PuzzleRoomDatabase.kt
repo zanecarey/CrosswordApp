@@ -19,8 +19,7 @@ abstract class PuzzleRoomDatabase : RoomDatabase() {
         private var INSTANCE: PuzzleRoomDatabase? = null
 
         fun getDatabase(
-            context: Context,
-            scope: CoroutineScope
+            context: Context
         ): PuzzleRoomDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -29,7 +28,8 @@ abstract class PuzzleRoomDatabase : RoomDatabase() {
                     "puzzle_database"
                 )
                     .fallbackToDestructiveMigration()
-                    .addCallback(PuzzleDatabaseCallback(scope))
+                    .allowMainThreadQueries()
+                    //.addCallback(PuzzleDatabaseCallback(scope))
                     .build()
                 INSTANCE = instance
                 instance
@@ -44,13 +44,14 @@ abstract class PuzzleRoomDatabase : RoomDatabase() {
                 super.onOpen(db)
                 // If you want to keep the data through app restarts,
                 // comment out the following line.
-                INSTANCE?.let { database ->
-                    scope.launch(Dispatchers.IO) {
-                        populateDatabase(database.puzzleDao())
-                    }
-                }
+//                INSTANCE?.let { database ->
+//                    scope.launch(Dispatchers.IO) {
+//                        populateDatabase(database.puzzleDao())
+//                    }
+//            }
             }
         }
+
 
         fun populateDatabase(puzzleDao: PuzzleDAO) {
             // Start the app with a clean database every time.
