@@ -158,6 +158,8 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         cvZ = findViewById(R.id.cardViewZ)
 
         if (intent.getStringExtra("puzzleType") == "random") {
+            chronometer.base = SystemClock.elapsedRealtime()
+            chronometer.start()
             getPuzzleData(getRandomYear(), getRandomMonth(), getRandomDay())
         } else {
             val db = PuzzleRoomDatabase.getDatabase(applicationContext)
@@ -169,9 +171,9 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             val month = list[0].puzzleMonth
             val day = list[0].puzzleDay
 //            savedCellList = list.get(0).gameBoardState
-            //val timer = list?.get(0)?.puzzleTimer
-            //chronometer.base = timer!!.toLong()
-            //chronometer.start()
+            val timer = list[0].puzzleTimer
+            chronometer.base = SystemClock.elapsedRealtime() - timer
+            chronometer.start()
 
             //getPuzzleData(year, month, day)
             getPuzzleData(year, month, day)
@@ -323,7 +325,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
         }
 
-        chronometer.start()
+
 
     }
 
@@ -655,12 +657,12 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
         //save the game data to room db
         val db = PuzzleRoomDatabase.getDatabase(applicationContext)
-//        val timerValue = SystemClock.elapsedRealtime() - chronometer.base
+        val timerValue = (SystemClock.elapsedRealtime() - chronometer.base)
 //        val gameState = mutableListOf(Cell("",0, 0))
 //        for(i in 0..cellRecyclerView.size){
 //            gameState[i] = Cell(cellRecyclerView[i].cellLetter.toString(), Integer.parseInt(cellRecyclerView[i].cellNumber.text.toString()), cellRecyclerView[i].visibility)
 //        }
         //db.puzzleDao().insert(Puzzle(year, month, day, timerValue.toString(), CellList(gameState)))
-        db.puzzleDao().insert(Puzzle(year, month, day))
+        db.puzzleDao().insert(Puzzle(year, month, day, timerValue))
     }
 }
