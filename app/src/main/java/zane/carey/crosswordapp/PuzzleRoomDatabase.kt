@@ -4,12 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = [Puzzle::class], version = 4)
+@Database(entities = [Puzzle::class], version = 9)
+@TypeConverters(Converter::class)
 abstract class PuzzleRoomDatabase : RoomDatabase() {
 
     abstract fun puzzleDao(): PuzzleDAO

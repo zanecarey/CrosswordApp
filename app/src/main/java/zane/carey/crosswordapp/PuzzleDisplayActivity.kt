@@ -72,7 +72,7 @@ private var lastCells: List<Int> =
 //arrays for our grid
 private var gridnums: List<Int> = listOf(0)
 private var grid: List<String> = listOf("")
-private var cellList: MutableList<Cell> = mutableListOf<Cell>()
+private var cellList = mutableListOf<Cell>()
 private lateinit var savedCellList: CellList
 
 
@@ -170,18 +170,13 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             val year = list[0].puzzleYear
             val month = list[0].puzzleMonth
             val day = list[0].puzzleDay
-//            savedCellList = list.get(0).gameBoardState
+            savedCellList = list[0].gameBoardState
             val timer = list[0].puzzleTimer
             chronometer.base = SystemClock.elapsedRealtime() - timer
             chronometer.start()
 
-            //getPuzzleData(year, month, day)
             getPuzzleData(year, month, day)
         }
-
-        //getPuzzleData("1982", "05", "09")
-        //getPuzzleData(year, month, day)
-
 
         //Letter box listeners
         cvA.setOnClickListener {
@@ -395,7 +390,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
                     cellList.add(Cell(grid[i], gridnums[i], View.INVISIBLE))
                 }
                 val adapter: CellAdapter
-                if (intent.getStringExtra("puzzleType") == "random" || intent.getStringExtra("puzzleType") == "saved") {
+                if (intent.getStringExtra("puzzleType") == "random") {
                     adapter = CellAdapter(cellList, this@PuzzleDisplayActivity)
                 } else {
                     adapter = CellAdapter(savedCellList.cellList, this@PuzzleDisplayActivity)
@@ -658,11 +653,11 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         //save the game data to room db
         val db = PuzzleRoomDatabase.getDatabase(applicationContext)
         val timerValue = (SystemClock.elapsedRealtime() - chronometer.base)
-//        val gameState = mutableListOf(Cell("",0, 0))
-//        for(i in 0..cellRecyclerView.size){
-//            gameState[i] = Cell(cellRecyclerView[i].cellLetter.toString(), Integer.parseInt(cellRecyclerView[i].cellNumber.text.toString()), cellRecyclerView[i].visibility)
-//        }
-        //db.puzzleDao().insert(Puzzle(year, month, day, timerValue.toString(), CellList(gameState)))
-        db.puzzleDao().insert(Puzzle(year, month, day, timerValue))
+        val gameState = mutableListOf<Cell>()
+        Toast.makeText(this, cellRecyclerView[16].cellNumber.text.toString(), Toast.LENGTH_LONG).show()
+        for(i in 0 until cellRecyclerView.size){
+            gameState.add(Cell(cellRecyclerView[i].cellLetter.text.toString(), Integer.parseInt(cellRecyclerView[i].cellNumber.text.toString()), cellRecyclerView[i].cellLetter.visibility))
+        }
+        db.puzzleDao().insert(Puzzle(year, month, day, timerValue, CellList(gameState)))
     }
 }

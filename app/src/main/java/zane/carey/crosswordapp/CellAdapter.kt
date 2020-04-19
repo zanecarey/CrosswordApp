@@ -37,25 +37,25 @@ class CellAdapter(val list: List<Cell>, val context: Context) :
         //check if character is ".", if it is then make cell blank and unclickable
         if (myList[position].letter == ".") {
             holder.layout.setBackgroundColor(Color.BLACK)
-//            holder.layout.isClickable = false
-//////            holder.letter.isClickable = false
-//////            holder.num.isClickable = false
             clickable = false
             holder.letter.text = myList[position].letter
         } else {
-            if(myList[position].visibility == View.VISIBLE){
+            holder.letter.text = myList[position].letter.toString()
+            if (myList[position].visibility == View.INVISIBLE) {
+                holder.letter.visibility = View.INVISIBLE
+            } else {
                 holder.letter.visibility = View.VISIBLE
             }
-            holder.letter.text = myList[position].letter.toString()
+
         }
 
-        holder.layout.setOnClickListener{
+        holder.layout.setOnClickListener {
 
-            if(clickable){
+            if (clickable) {
                 holder.layout.setBackgroundResource(R.drawable.green_border)
 
                 //update highlighted position
-                if(myContext is PuzzleDisplayActivity){
+                if (myContext is PuzzleDisplayActivity) {
                     myContext.removeGreenHighlight(HighlightedPosition.position)
                     myContext.removeBlueHighlights()
                     myContext.highlightCells(position)
