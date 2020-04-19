@@ -9,7 +9,7 @@ import androidx.room.Query
 @Dao
 interface PuzzleDAO {
     @Query("SELECT * from puzzle_table ORDER BY puzzle ASC")
-    fun getPuzzle(): LiveData<List<Puzzle>>
+    fun getPuzzle(): List<Puzzle>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(puzzle: Puzzle)

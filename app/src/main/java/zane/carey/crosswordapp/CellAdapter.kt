@@ -43,6 +43,9 @@ class CellAdapter(val list: List<Cell>, val context: Context) :
             clickable = false
             holder.letter.text = myList[position].letter
         } else {
+            if(myList[position].visibility == View.VISIBLE){
+                holder.letter.visibility = View.VISIBLE
+            }
             holder.letter.text = myList[position].letter.toString()
         }
 

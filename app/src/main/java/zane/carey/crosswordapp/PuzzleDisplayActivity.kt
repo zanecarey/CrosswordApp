@@ -3,6 +3,7 @@ package zane.carey.crosswordapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.SystemClock
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.get
+import androidx.core.view.iterator
 import androidx.core.view.size
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -71,6 +73,8 @@ private var lastCells: List<Int> =
 private var gridnums: List<Int> = listOf(0)
 private var grid: List<String> = listOf("")
 private var cellList: MutableList<Cell> = mutableListOf<Cell>()
+private lateinit var savedCellList: CellList
+
 
 //letter card views
 private lateinit var cvA: CardView
@@ -102,6 +106,7 @@ private lateinit var cvZ: CardView
 
 
 private lateinit var puzzleViewModel: PuzzleViewModel
+
 
 class PuzzleDisplayActivity : AppCompatActivity() {
 
@@ -158,13 +163,18 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             val db = PuzzleRoomDatabase.getDatabase(applicationContext)
 
             //db.puzzleDao().deleteAll()
-            val puzzles = db.puzzleDao().getPuzzle()
-            val list = puzzles.value
-            val year = list?.get(0).toString().substring(0,3)
-//            val month = list?.get(0).toString().substring(4,5)
-           // val day = list?.get(0).toString().substring(6,7)
+            val list = db.puzzleDao().getPuzzle()
+
+            val year = list[0].puzzleYear
+            val month = list[0].puzzleMonth
+            val day = list[0].puzzleDay
+//            savedCellList = list.get(0).gameBoardState
+            //val timer = list?.get(0)?.puzzleTimer
+            //chronometer.base = timer!!.toLong()
+            //chronometer.start()
+
             //getPuzzleData(year, month, day)
-            getPuzzleData(year, "05", "09")
+            getPuzzleData(year, month, day)
         }
 
         //getPuzzleData("1982", "05", "09")
@@ -317,15 +327,16 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
     }
 
-    private fun updateInputPosition(){
-        if(inputMode == "horizontal" && highlightedCellsList.contains(HighlightedPosition.position + 1)){
+    private fun updateInputPosition() {
+        if (inputMode == "horizontal" && highlightedCellsList.contains(HighlightedPosition.position + 1)) {
             HighlightedPosition.position++
             highlightCells(HighlightedPosition.position)
-        } else if(highlightedCellsList.contains(HighlightedPosition.position + 15)){
+        } else if (highlightedCellsList.contains(HighlightedPosition.position + 15)) {
             HighlightedPosition.position += 15
             highlightCells(HighlightedPosition.position)
         }
     }
+
     private fun getRandomYear(): String {
         year = (1976..2017).shuffled().first().toString()
         return year
@@ -334,7 +345,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
     private fun getRandomMonth(): String {
         val monthVal = (1..12).shuffled().first()
 
-        if(monthVal < 10) {
+        if (monthVal < 10) {
             month = monthVal.toString().padStart(2, '0')
         } else {
             month = monthVal.toString()
@@ -360,7 +371,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
                 rows = request.size.rows
                 cols = request.size.cols
 
-                if(rows != 15 || cols != 15){
+                if (rows != 15 || cols != 15) {
                     getPuzzleData(getRandomYear(), getRandomMonth(), getRandomDay())
                     return@launch
                 }
@@ -379,21 +390,25 @@ class PuzzleDisplayActivity : AppCompatActivity() {
                 grid = request.grid
 
                 for (i in 0 until grid.size) {
-                    cellList.add(Cell(grid[i], gridnums[i]))
+                    cellList.add(Cell(grid[i], gridnums[i], View.INVISIBLE))
                 }
-                val adapter = CellAdapter(cellList, this@PuzzleDisplayActivity)
-
-
-                cellRecyclerView.adapter = adapter
-
-                cellRecyclerView.layoutManager =
-                    GridLayoutManager(this@PuzzleDisplayActivity, 15)
-
-                //update ui info
-                withContext(Dispatchers.Main) {
-
-                    clueTextView.text = request.clues.across[0]
+                val adapter: CellAdapter
+                if (intent.getStringExtra("puzzleType") == "random" || intent.getStringExtra("puzzleType") == "saved") {
+                    adapter = CellAdapter(cellList, this@PuzzleDisplayActivity)
+                } else {
+                    adapter = CellAdapter(savedCellList.cellList, this@PuzzleDisplayActivity)
                 }
+                    cellRecyclerView.adapter = adapter
+
+                    cellRecyclerView.layoutManager =
+                        GridLayoutManager(this@PuzzleDisplayActivity, 15)
+
+                    //update ui info
+                    withContext(Dispatchers.Main) {
+
+                        clueTextView.text = request.clues.across[0]
+                    }
+
 
             } catch (ex: HttpException) {
 
@@ -636,11 +651,16 @@ class PuzzleDisplayActivity : AppCompatActivity() {
     }
 
     //save the game to room db
-    fun saveGame(){
+    fun saveGame() {
 
-        //PuzzleRoomDatabase.getDatabase(applicationContext, )
+        //save the game data to room db
         val db = PuzzleRoomDatabase.getDatabase(applicationContext)
-
-        db.puzzleDao().insert(Puzzle(year + month + day))
+//        val timerValue = SystemClock.elapsedRealtime() - chronometer.base
+//        val gameState = mutableListOf(Cell("",0, 0))
+//        for(i in 0..cellRecyclerView.size){
+//            gameState[i] = Cell(cellRecyclerView[i].cellLetter.toString(), Integer.parseInt(cellRecyclerView[i].cellNumber.text.toString()), cellRecyclerView[i].visibility)
+//        }
+        //db.puzzleDao().insert(Puzzle(year, month, day, timerValue.toString(), CellList(gameState)))
+        db.puzzleDao().insert(Puzzle(year, month, day))
     }
 }

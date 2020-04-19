@@ -12,6 +12,7 @@ import kotlinx.coroutines.*
 
 private lateinit var randCardView: CardView
 private lateinit var resumeCardView: CardView
+private lateinit var resetCV: CardView
 
 val api = RestApi()
 
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         randCardView = findViewById(R.id.randomCardView)
         resumeCardView = findViewById(R.id.savedGamesCardView)
+        resetCV = findViewById(R.id.resetDBCardView)
 
         randCardView.setOnClickListener {
 
@@ -39,9 +41,12 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("puzzleType", "saved")
             startActivity(intent)
         }
-        val db = PuzzleRoomDatabase.getDatabase(applicationContext)
 
-        //db.puzzleDao().deleteAll()
+        resetCV.setOnClickListener {
+            val db = PuzzleRoomDatabase.getDatabase(applicationContext)
+
+            db.puzzleDao().deleteAll()
+        }
     }
 }
 

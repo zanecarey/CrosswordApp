@@ -11,7 +11,8 @@ class PuzzleViewModel(application: Application) : AndroidViewModel(application) 
 
     private val repository: PuzzleRepository
 
-    val allPuzzles: LiveData<List<Puzzle>>
+    //val allPuzzles: LiveData<List<Puzzle>>
+    val allPuzzles: List<Puzzle>
 
     init {
         val puzzleDao = PuzzleRoomDatabase.getDatabase(application).puzzleDao()

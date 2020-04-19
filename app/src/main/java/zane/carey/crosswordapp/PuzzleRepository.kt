@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 
 class PuzzleRepository(private val puzzleDao: PuzzleDAO) {
 
-    val allPuzzles: LiveData<List<Puzzle>> = puzzleDao.getPuzzle()
+    val allPuzzles: List<Puzzle> = puzzleDao.getPuzzle()
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread

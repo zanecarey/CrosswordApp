@@ -9,7 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = [Puzzle::class], version = 1)
+@Database(entities = [Puzzle::class], version = 3)
 abstract class PuzzleRoomDatabase : RoomDatabase() {
 
     abstract fun puzzleDao(): PuzzleDAO
@@ -53,15 +53,15 @@ abstract class PuzzleRoomDatabase : RoomDatabase() {
         }
 
 
-        fun populateDatabase(puzzleDao: PuzzleDAO) {
-            // Start the app with a clean database every time.
-            // Not needed if you only populate on creation.
-            puzzleDao.deleteAll()
-
-            var puzzle = Puzzle("Hello")
-            puzzleDao.insert(puzzle)
-            puzzle = Puzzle("World!")
-            puzzleDao.insert(puzzle)
-        }
+//        fun populateDatabase(puzzleDao: PuzzleDAO) {
+//            // Start the app with a clean database every time.
+//            // Not needed if you only populate on creation.
+//            puzzleDao.deleteAll()
+//
+//            var puzzle = Puzzle("Hello")
+//            puzzleDao.insert(puzzle)
+//            puzzle = Puzzle("World!")
+//            puzzleDao.insert(puzzle)
+//        }
     }
 }

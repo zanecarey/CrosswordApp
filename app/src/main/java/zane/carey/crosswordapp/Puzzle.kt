@@ -1,8 +1,9 @@
 package zane.carey.crosswordapp;
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import androidx.recyclerview.widget.RecyclerView
+import androidx.room.*
 
 @Entity(tableName = "puzzle_table")
-data class Puzzle(@PrimaryKey @ColumnInfo(name = "puzzle") val puzzle: String)
+@TypeConverters(Converter::class)
+//data class Puzzle(@PrimaryKey @ColumnInfo(name = "puzzle") val puzzleYear: String, val puzzleMonth: String, val puzzleDay: String, val puzzleTimer: String, val gameBoardState: CellList)
+data class Puzzle(@PrimaryKey @ColumnInfo(name = "puzzle") val puzzleYear: String, val puzzleMonth: String, val puzzleDay: String)

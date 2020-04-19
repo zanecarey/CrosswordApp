@@ -32,7 +32,7 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_height="0dp"
         android:layout_gravity="center"
         android:layout_marginBottom="18dp"
         android:src="@drawable/ic_gradient_black_72dp"
@@ -48,8 +48,8 @@
         android:layout_marginBottom="33dp"
         app:cardBackgroundColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toTopOf="@+id/savedGamesCardView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/imageView">
 
         <TextView
@@ -66,9 +66,9 @@
         android:id="@+id/savedGamesCardView"
         android:layout_width="120dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="113dp"
+        android:layout_marginBottom="24dp"
         app:cardBackgroundColor="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/resetDBCardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/randomCardView">
@@ -78,6 +78,27 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Resume"
+            android:textSize="24sp">
+
+        </TextView>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/resetDBCardView"
+        android:layout_width="120dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        app:cardBackgroundColor="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/savedGamesCardView">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Reset"
             android:textSize="24sp">
 
         </TextView>
