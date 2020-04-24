@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
             val intent = Intent(this, PuzzleDisplayActivity::class.java)
 
-            intent.putExtra("puzzleType", "random")
+            intent.putExtra("puzzleTypeRandom", "random")
             startActivity(intent)
         }
 
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
             val intent = Intent(this, PuzzleDisplayActivity::class.java)
 
-            intent.putExtra("puzzleType", "saved")
+            intent.putExtra("puzzleTypeSaved", "saved")
             startActivity(intent)
         }
 

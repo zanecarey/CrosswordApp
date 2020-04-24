@@ -44,11 +44,11 @@ var rows = 0
 var cols = 0
 
 //game info
-var date: String = ""
-var author: String = ""
-var editor: String = ""
-var cluesAcross: MutableList<String> = mutableListOf<String>()
-var cluesDown: MutableList<String> = mutableListOf<String>()
+private var date: String = ""
+private var author: String = ""
+private var editor: String = ""
+private var cluesAcross: MutableList<String> = mutableListOf<String>()
+private var cluesDown: MutableList<String> = mutableListOf<String>()
 
 
 //current highlighted position value
@@ -58,10 +58,10 @@ class HighlightedPosition {
     }
 }
 
-var highlightedCellsList: MutableList<Int> = mutableListOf<Int>()
+private var highlightedCellsList: MutableList<Int> = mutableListOf<Int>()
 
 //current input mode
-var inputMode: String = "horizontal"
+private var inputMode: String = "horizontal"
 
 //first and last indexes of each row
 private var firstCells: List<Int> =
@@ -157,7 +157,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         cvY = findViewById(R.id.cardViewY)
         cvZ = findViewById(R.id.cardViewZ)
 
-        if (intent.getStringExtra("puzzleType") == "random") {
+        if (intent.getStringExtra("puzzleTypeRandom") == "random") {
             chronometer.base = SystemClock.elapsedRealtime()
             chronometer.start()
             getPuzzleData(getRandomYear(), getRandomMonth(), getRandomDay())
