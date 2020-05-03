@@ -1,5 +1,6 @@
 package zane.carey.crosswordapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -162,16 +163,16 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             chronometer.start()
             getPuzzleData(getRandomYear(), getRandomMonth(), getRandomDay())
         } else {
+            val intent = Intent(this, PuzzleDisplayActivity::class.java)
             val db = PuzzleRoomDatabase.getDatabase(applicationContext)
-
-            //db.puzzleDao().deleteAll()
             val list = db.puzzleDao().getPuzzle()
+            val puzzleIndex = intent.getIntExtra("puzzleTypeSaved", 0)
 
-            val year = list[0].puzzleYear
-            val month = list[0].puzzleMonth
-            val day = list[0].puzzleDay
-            savedCellList = list[0].gameBoardState
-            val timer = list[0].puzzleTimer
+            val year = list[puzzleIndex.toInt()].puzzleYear
+            val month = list[puzzleIndex.toInt()].puzzleMonth
+            val day = list[puzzleIndex.toInt()].puzzleDay
+            savedCellList = list[puzzleIndex.toInt()].gameBoardState
+            val timer = list[puzzleIndex.toInt()].puzzleTimer
             chronometer.base = SystemClock.elapsedRealtime() - timer
             chronometer.start()
 
@@ -390,7 +391,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
                     cellList.add(Cell(grid[i], gridnums[i], View.INVISIBLE))
                 }
                 val adapter: CellAdapter
-                if (intent.getStringExtra("puzzleType") == "random") {
+                if (intent.getStringExtra("puzzleTypeRandom") == "random") {
                     adapter = CellAdapter(cellList, this@PuzzleDisplayActivity)
                 } else {
                     adapter = CellAdapter(savedCellList.cellList, this@PuzzleDisplayActivity)
@@ -650,11 +651,9 @@ class PuzzleDisplayActivity : AppCompatActivity() {
     //save the game to room db
     fun saveGame() {
 
-        //save the game data to room db
         val db = PuzzleRoomDatabase.getDatabase(applicationContext)
         val timerValue = (SystemClock.elapsedRealtime() - chronometer.base)
         val gameState = mutableListOf<Cell>()
-        Toast.makeText(this, cellRecyclerView[16].cellNumber.text.toString(), Toast.LENGTH_LONG).show()
         for(i in 0 until cellRecyclerView.size){
             gameState.add(Cell(cellRecyclerView[i].cellLetter.text.toString(), Integer.parseInt(cellRecyclerView[i].cellNumber.text.toString()), cellRecyclerView[i].cellLetter.visibility))
         }
