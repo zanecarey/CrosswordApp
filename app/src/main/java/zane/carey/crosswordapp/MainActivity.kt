@@ -41,12 +41,11 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, PuzzleDisplayActivity::class.java)
             val db = PuzzleRoomDatabase.getDatabase(applicationContext)
             val list = db.puzzleDao().getPuzzle()
-            //val array = arrayOfNulls<String>(list.size)
             val puzzleList = mutableListOf<String>()
             for (i in list.indices) {
 
                 //array[i] = Date(list[i].puzzleYear, list[i].puzzleMonth, list[i].puzzleDay).toString()
-                puzzleList.add(list[i].puzzleYear+list[i].puzzleMonth+list[i].puzzleDay)
+                puzzleList.add(list[i].puzzleDay + "/" + list[i].puzzleMonth + "/" + list[i].puzzleYear)
 
             }
             val array = puzzleList.toTypedArray()
@@ -55,16 +54,16 @@ class MainActivity : AppCompatActivity() {
             builder.setItems(array
             ) { dialog, which ->
                 dateChoice = array[which].toString()
-                puzzleIndex = which
-                intent.putExtra("puzzleTypeSaved", puzzleIndex)
+                //puzzleIndex = which
+                intent.putExtra("puzzleTypeSaved", which)
                 startActivity(intent)
             }
 
-            builder.setPositiveButton("Ok") { dialog, which ->
-
-                intent.putExtra("puzzleTypeSaved", dateChoice + puzzleIndex)
-                startActivity(intent)
-            }
+//            builder.setPositiveButton("Ok") { dialog, which ->
+//
+//                intent.putExtra("puzzleTypeSaved", dateChoice + puzzleIndex)
+//                startActivity(intent)
+//            }
 
             val dialog = builder.create()
             dialog.show()

@@ -163,7 +163,6 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             chronometer.start()
             getPuzzleData(getRandomYear(), getRandomMonth(), getRandomDay())
         } else {
-            val intent = Intent(this, PuzzleDisplayActivity::class.java)
             val db = PuzzleRoomDatabase.getDatabase(applicationContext)
             val list = db.puzzleDao().getPuzzle()
             val puzzleIndex = intent.getIntExtra("puzzleTypeSaved", 0)
