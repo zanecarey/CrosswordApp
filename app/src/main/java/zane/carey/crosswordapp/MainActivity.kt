@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             for (i in list.indices) {
 
                 //array[i] = Date(list[i].puzzleYear, list[i].puzzleMonth, list[i].puzzleDay).toString()
-                puzzleList.add(list[i].puzzleDay + "/" + list[i].puzzleMonth + "/" + list[i].puzzleYear)
+                puzzleList.add(list[i].puzzleDay + "/" + list[i].puzzleMonth + "/" + list[i].puzzleYear + " - " + list[i].progress + "%")
 
             }
             val array = puzzleList.toTypedArray()

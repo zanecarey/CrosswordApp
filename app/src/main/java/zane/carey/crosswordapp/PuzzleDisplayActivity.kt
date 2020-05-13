@@ -429,6 +429,21 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         }
     }
 
+    //return the puzzle progress in % form
+    private fun getPuzzleProgress() : Double {
+        var progress = 0.0
+        var cellAnswers = 0
+        for (i in 0 until cellRecyclerView.size - 1) {
+            if (cellRecyclerView[i].cellLetter.text == grid[i] && cellRecyclerView[i].cellLetter.visibility == View.VISIBLE) {
+                progress++
+            }
+            if(grid[i] != "."){
+                cellAnswers++
+            }
+        }
+
+        return (progress / cellAnswers) * 100
+    }
 
     fun displayClue(position: Int) {
         if (inputMode == "horizontal") {
@@ -652,10 +667,12 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
         val db = PuzzleRoomDatabase.getDatabase(applicationContext)
         val timerValue = (SystemClock.elapsedRealtime() - chronometer.base)
+        val progress = getPuzzleProgress()
         val gameState = mutableListOf<Cell>()
         for(i in 0 until cellRecyclerView.size){
             gameState.add(Cell(cellRecyclerView[i].cellLetter.text.toString(), Integer.parseInt(cellRecyclerView[i].cellNumber.text.toString()), cellRecyclerView[i].cellLetter.visibility))
         }
-        db.puzzleDao().insert(Puzzle(year, month, day, timerValue, CellList(gameState)))
+
+        db.puzzleDao().insert(Puzzle(year, month, day, timerValue, CellList(gameState), progress))
     }
 }
