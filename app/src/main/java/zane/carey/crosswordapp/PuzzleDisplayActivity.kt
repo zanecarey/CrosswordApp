@@ -52,12 +52,7 @@ private var cluesAcross: MutableList<String> = mutableListOf<String>()
 private var cluesDown: MutableList<String> = mutableListOf<String>()
 
 
-//current highlighted position value
-class HighlightedPosition {
-    companion object {
-        var position = 0
-    }
-}
+
 
 private var highlightedCellsList: MutableList<Int> = mutableListOf<Int>()
 
@@ -321,7 +316,6 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         }
 
 
-
     }
 
     private fun updateInputPosition() {
@@ -395,16 +389,16 @@ class PuzzleDisplayActivity : AppCompatActivity() {
                 } else {
                     adapter = CellAdapter(savedCellList.cellList, this@PuzzleDisplayActivity)
                 }
-                    cellRecyclerView.adapter = adapter
+                cellRecyclerView.adapter = adapter
 
-                    cellRecyclerView.layoutManager =
-                        GridLayoutManager(this@PuzzleDisplayActivity, 15)
+                cellRecyclerView.layoutManager =
+                    GridLayoutManager(this@PuzzleDisplayActivity, 15)
 
-                    //update ui info
-                    withContext(Dispatchers.Main) {
+                //update ui info
+                withContext(Dispatchers.Main) {
 
-                        clueTextView.text = request.clues.across[0]
-                    }
+                    clueTextView.text = request.clues.across[0]
+                }
 
 
             } catch (ex: HttpException) {
@@ -430,14 +424,14 @@ class PuzzleDisplayActivity : AppCompatActivity() {
     }
 
     //return the puzzle progress in % form
-    private fun getPuzzleProgress() : Double {
+    private fun getPuzzleProgress(): Double {
         var progress = 0.0
         var cellAnswers = 0
         for (i in 0 until cellRecyclerView.size - 1) {
             if (cellRecyclerView[i].cellLetter.text == grid[i] && cellRecyclerView[i].cellLetter.visibility == View.VISIBLE) {
                 progress++
             }
-            if(grid[i] != "."){
+            if (grid[i] != ".") {
                 cellAnswers++
             }
         }
@@ -656,6 +650,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Exit Game?")
         builder.setPositiveButton("Ok") { dialog, which ->
+            cellList.clear()
             super.onBackPressed()
         }
         val dialog = builder.create()
@@ -669,8 +664,14 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         val timerValue = (SystemClock.elapsedRealtime() - chronometer.base)
         val progress = getPuzzleProgress()
         val gameState = mutableListOf<Cell>()
-        for(i in 0 until cellRecyclerView.size){
-            gameState.add(Cell(cellRecyclerView[i].cellLetter.text.toString(), Integer.parseInt(cellRecyclerView[i].cellNumber.text.toString()), cellRecyclerView[i].cellLetter.visibility))
+        for (i in 0 until cellRecyclerView.size) {
+            gameState.add(
+                Cell(
+                    cellRecyclerView[i].cellLetter.text.toString(),
+                    Integer.parseInt(cellRecyclerView[i].cellNumber.text.toString()),
+                    cellRecyclerView[i].cellLetter.visibility
+                )
+            )
         }
 
         db.puzzleDao().insert(Puzzle(year, month, day, timerValue, CellList(gameState), progress))

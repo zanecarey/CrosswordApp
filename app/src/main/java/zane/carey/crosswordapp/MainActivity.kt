@@ -18,6 +18,13 @@ private lateinit var dateChoice: String
 private var puzzleIndex: Int = 0
 val api = RestApi()
 
+//current highlighted position value
+class HighlightedPosition {
+    companion object {
+        var position = 0
+    }
+}
+
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
