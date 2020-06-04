@@ -445,7 +445,9 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             var blackCellStreak = true
             for (i in 0..position) {
                 if (cellRecyclerView[i].cellLetter.text == ".") {
-                    if(!firstCells.contains(i)){
+                    if(firstCells.contains(i)) {
+                        clueCount--
+                    } else {
                         if (blackCellStreak) {
                             clueCount++
                             blackCellStreak = false
@@ -552,8 +554,10 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
                 for (i in position + 1..position + 14) {
                     if (lastCells.contains(i)) {
-                        cellRecyclerView[i].setBackgroundResource(R.drawable.blue_border)
-                        highlightedCellsList.add(i)
+                        if(cellRecyclerView[i].cellLetter.text != "."){
+                            cellRecyclerView[i].setBackgroundResource(R.drawable.blue_border)
+                            highlightedCellsList.add(i)
+                        }
                         break
                     } else {
                         if (cellRecyclerView[i].cellLetter.text != ".") {
@@ -571,8 +575,10 @@ class PuzzleDisplayActivity : AppCompatActivity() {
 
                 for (i in position - 1 downTo position - 14) {
                     if (firstCells.contains(i)) {
-                        cellRecyclerView[i].setBackgroundResource(R.drawable.blue_border)
-                        highlightedCellsList.add(i)
+                        if(cellRecyclerView[i].cellLetter.text != "."){
+                            cellRecyclerView[i].setBackgroundResource(R.drawable.blue_border)
+                            highlightedCellsList.add(i)
+                        }
                         break
                     } else {
                         if (cellRecyclerView[i].cellLetter.text != ".") {
