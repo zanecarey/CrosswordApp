@@ -444,12 +444,14 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             var clueCount = 0
             var blackCellStreak = true
             for (i in 0..position) {
-
                 if (cellRecyclerView[i].cellLetter.text == ".") {
-                    if (blackCellStreak) {
-                        clueCount++
-                        blackCellStreak = false
+                    if(!firstCells.contains(i)){
+                        if (blackCellStreak) {
+                            clueCount++
+                            blackCellStreak = false
+                        }
                     }
+
                 } else if (lastCells.contains(i)) {
                     clueCount++
                     blackCellStreak = true
@@ -651,6 +653,7 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         builder.setTitle("Exit Game?")
         builder.setPositiveButton("Ok") { dialog, which ->
             cellList.clear()
+            HighlightedPosition.position = 0
             super.onBackPressed()
         }
         val dialog = builder.create()
