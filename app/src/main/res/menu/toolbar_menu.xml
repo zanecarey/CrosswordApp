@@ -29,4 +29,10 @@
         app:showAsAction="ifRoom|withText"
         android:icon="@drawable/ic_save_white_24dp"
         />
+    <item
+        android:id="@+id/delete_save_game"
+        android:title="Delete Save"
+        app:showAsAction="ifRoom|withText"
+        android:icon="@drawable/ic_save_white_24dp"
+        />
 </menu>

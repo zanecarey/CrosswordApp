@@ -103,7 +103,7 @@ private lateinit var cvZ: CardView
 
 private lateinit var puzzleViewModel: PuzzleViewModel
 
-
+private lateinit var puzzleCopy: Puzzle
 class PuzzleDisplayActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -167,6 +167,9 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             val day = list[puzzleIndex.toInt()].puzzleDay
             savedCellList = list[puzzleIndex.toInt()].gameBoardState
             val timer = list[puzzleIndex.toInt()].puzzleTimer
+            val progress = list[puzzleIndex].progress
+            puzzleCopy = Puzzle(year,month,day,timer, savedCellList,progress)
+
             chronometer.base = SystemClock.elapsedRealtime() - timer
             chronometer.start()
 
@@ -650,6 +653,10 @@ class PuzzleDisplayActivity : AppCompatActivity() {
                 saveGame()
                 return true
             }
+            R.id.delete_save_game -> {
+                deleteSave()
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -683,6 +690,11 @@ class PuzzleDisplayActivity : AppCompatActivity() {
             )
         }
 
-        db.puzzleDao().insert(Puzzle(year, month, day, timerValue, CellList(gameState), progress))
+        db.puzzleDao().insert(Puzzle(year,month,day,timerValue,CellList(gameState),progress))
+    }
+
+    fun deleteSave() {
+        val db = PuzzleRoomDatabase.getDatabase(applicationContext)
+        db.puzzleDao().deleteSave(puzzleCopy)
     }
 }

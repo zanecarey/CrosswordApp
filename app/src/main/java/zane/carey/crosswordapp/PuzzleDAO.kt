@@ -1,10 +1,7 @@
 package zane.carey.crosswordapp
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface PuzzleDAO {
@@ -16,4 +13,7 @@ interface PuzzleDAO {
 
     @Query("DELETE FROM puzzle_table")
     fun deleteAll()
+
+    @Delete
+    fun deleteSave(puzzle: Puzzle)
 }
