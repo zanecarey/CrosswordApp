@@ -31,9 +31,11 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="290dp"
-        android:layout_height="275dp"
+        android:layout_width="308dp"
+        android:layout_height="270dp"
         android:layout_gravity="center"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
         android:layout_marginBottom="18dp"
         android:src="@drawable/ic_gradient_black_72dp"
         app:layout_constraintBottom_toTopOf="@+id/randomCardView"
@@ -45,7 +47,7 @@
         android:id="@+id/randomCardView"
         android:layout_width="120dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="33dp"
+        android:layout_marginBottom="19dp"
         app:cardBackgroundColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toTopOf="@+id/savedGamesCardView"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
@@ -66,9 +68,9 @@
         android:id="@+id/savedGamesCardView"
         android:layout_width="120dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="118dp"
         app:cardBackgroundColor="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toTopOf="@+id/resetDBCardView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/randomCardView">
@@ -83,25 +85,25 @@
         </TextView>
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/resetDBCardView"
-        android:layout_width="120dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
-        app:cardBackgroundColor="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/savedGamesCardView">
+    <!--    <androidx.cardview.widget.CardView-->
+    <!--        android:id="@+id/resetDBCardView"-->
+    <!--        android:layout_width="120dp"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_marginBottom="16dp"-->
+    <!--        app:cardBackgroundColor="@color/colorPrimaryDark"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/savedGamesCardView">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Reset"
-            android:textSize="24sp">
+    <!--        <TextView-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:text="Reset"-->
+    <!--            android:textSize="24sp">-->
 
-        </TextView>
-    </androidx.cardview.widget.CardView>
+    <!--        </TextView>-->
+    <!--    </androidx.cardview.widget.CardView>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

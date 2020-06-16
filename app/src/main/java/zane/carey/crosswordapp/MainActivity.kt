@@ -13,7 +13,6 @@ import kotlinx.coroutines.*
 
 private lateinit var randCardView: CardView
 private lateinit var resumeCardView: CardView
-private lateinit var resetCV: CardView
 private lateinit var dateChoice: String
 private var puzzleIndex: Int = 0
 val api = RestApi()
@@ -33,7 +32,6 @@ class MainActivity : AppCompatActivity() {
 
         randCardView = findViewById(R.id.randomCardView)
         resumeCardView = findViewById(R.id.savedGamesCardView)
-        resetCV = findViewById(R.id.resetDBCardView)
 
         randCardView.setOnClickListener {
 
@@ -50,10 +48,7 @@ class MainActivity : AppCompatActivity() {
             val list = db.puzzleDao().getPuzzle()
             val puzzleList = mutableListOf<String>()
             for (i in list.indices) {
-
-                //array[i] = Date(list[i].puzzleYear, list[i].puzzleMonth, list[i].puzzleDay).toString()
                 puzzleList.add(list[i].puzzleDay + "/" + list[i].puzzleMonth + "/" + list[i].puzzleYear + " - " + list[i].progress + "%")
-
             }
             val array = puzzleList.toTypedArray()
             val builder = AlertDialog.Builder(this)
@@ -65,22 +60,8 @@ class MainActivity : AppCompatActivity() {
                 intent.putExtra("puzzleTypeSaved", which)
                 startActivity(intent)
             }
-
-//            builder.setPositiveButton("Ok") { dialog, which ->
-//
-//                intent.putExtra("puzzleTypeSaved", dateChoice + puzzleIndex)
-//                startActivity(intent)
-//            }
-
             val dialog = builder.create()
             dialog.show()
-
-        }
-
-        resetCV.setOnClickListener {
-            val db = PuzzleRoomDatabase.getDatabase(applicationContext)
-
-            db.puzzleDao().deleteAll()
         }
     }
 }

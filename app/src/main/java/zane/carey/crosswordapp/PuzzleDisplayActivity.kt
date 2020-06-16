@@ -27,6 +27,9 @@ import kotlinx.android.synthetic.main.cell_item.view.*
 import kotlinx.android.synthetic.main.custom_info_display.view.*
 import kotlinx.coroutines.*
 import retrofit2.HttpException
+import java.math.BigDecimal
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import kotlin.random.Random
 
 var year = ""
@@ -438,8 +441,10 @@ class PuzzleDisplayActivity : AppCompatActivity() {
                 cellAnswers++
             }
         }
-
-        return (progress / cellAnswers) * 100
+        val dblProgress = (progress / cellAnswers) * 100
+        val dbFormat = DecimalFormat("##.#")
+        dbFormat.roundingMode = RoundingMode.CEILING
+        return dbFormat.format(dblProgress).toDouble()
     }
 
     fun displayClue(position: Int) {
