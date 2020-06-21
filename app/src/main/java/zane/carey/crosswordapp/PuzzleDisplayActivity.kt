@@ -425,6 +425,8 @@ class PuzzleDisplayActivity : AppCompatActivity() {
         for (i in 0 until cellRecyclerView.size - 1) {
             if (cellRecyclerView[i].cellLetter.text != "*" && cellRecyclerView[i].cellLetter.text != grid[i]) {
                 cellRecyclerView[i].setBackgroundResource(R.drawable.red_border)
+            } else if (cellRecyclerView[i].cellLetter.text != "*" && cellRecyclerView[i].cellLetter.text == grid[i] && cellRecyclerView[i].cellLetter.visibility == View.VISIBLE){
+                cellRecyclerView[i].setBackgroundResource((R.drawable.gold_border))
             }
         }
     }
